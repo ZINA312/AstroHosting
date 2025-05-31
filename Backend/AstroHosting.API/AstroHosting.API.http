@@ -1,0 +1,6 @@
+@AstroHosting.API_HostAddress = http://localhost:5287
+
+GET {{AstroHosting.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
