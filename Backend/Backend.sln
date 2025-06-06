@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroHosting.API", "AstroHosting.API\AstroHosting.API.csproj", "{D776C1D4-E350-4648-8851-C1F5CCA6221F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroHosting.Core", "AstroHosting.Core\AstroHosting.Core.csproj", "{8F5AD41E-B1B2-4EF4-BE63-08BC636FF8DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroHosting.Persistence", "AstroHosting.Persistence\AstroHosting.Persistence.csproj", "{E4B1ED76-48EB-4037-8651-B676ADF0B001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroHosting.Application", "AstroHosting.Application\AstroHosting.Application.csproj", "{0326E9FE-7683-4201-BEFA-0B0A79450A60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{D776C1D4-E350-4648-8851-C1F5CCA6221F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D776C1D4-E350-4648-8851-C1F5CCA6221F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D776C1D4-E350-4648-8851-C1F5CCA6221F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F5AD41E-B1B2-4EF4-BE63-08BC636FF8DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F5AD41E-B1B2-4EF4-BE63-08BC636FF8DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F5AD41E-B1B2-4EF4-BE63-08BC636FF8DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F5AD41E-B1B2-4EF4-BE63-08BC636FF8DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4B1ED76-48EB-4037-8651-B676ADF0B001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4B1ED76-48EB-4037-8651-B676ADF0B001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4B1ED76-48EB-4037-8651-B676ADF0B001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4B1ED76-48EB-4037-8651-B676ADF0B001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0326E9FE-7683-4201-BEFA-0B0A79450A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0326E9FE-7683-4201-BEFA-0B0A79450A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0326E9FE-7683-4201-BEFA-0B0A79450A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0326E9FE-7683-4201-BEFA-0B0A79450A60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
