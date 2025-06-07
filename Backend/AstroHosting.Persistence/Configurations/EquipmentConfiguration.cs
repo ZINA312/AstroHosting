@@ -5,18 +5,16 @@ using System.Text.Json;
 
 namespace AstroHosting.Persistence.Configurations
 {
-    public class EquipmentConfiguration : IEntityTypeConfiguration<Equipment>
+    public class EquipmentConfiguration : BaseEntityConfiguration<Equipment>
     {
         private static readonly JsonSerializerOptions JsonOptions = new()
         {
             PropertyNamingPolicy = null, 
             WriteIndented = false       
         };
-        public void Configure(EntityTypeBuilder<Equipment> builder)
+        public override void Configure(EntityTypeBuilder<Equipment> builder)
         {
             builder.ToTable("Equipment");
-
-            builder.HasKey(e => e.Id);
 
             builder.Property(e => e.Name)
                 .IsRequired()
@@ -29,7 +27,6 @@ namespace AstroHosting.Persistence.Configurations
             builder.Property(e => e.Type)
                 .IsRequired();
 
-            // Хранение характеристик как JSON
             builder.Property(e => e.Specifications)
                 .HasColumnType("nvarchar(max)")
                 .HasConversion(

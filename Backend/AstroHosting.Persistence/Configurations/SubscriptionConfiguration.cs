@@ -4,13 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AstroHosting.Persistence.Configurations
 {
-    public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
+    public class SubscriptionConfiguration : BaseEntityConfiguration<Subscription>
     {
-        public void Configure(EntityTypeBuilder<Subscription> builder)
+        public override void Configure(EntityTypeBuilder<Subscription> builder)
         {
             builder.ToTable("Subscriptions");
-
-            builder.HasKey(s => s.Id);
 
             builder.HasOne(s => s.Subscriber)
                 .WithMany(u => u.SubscriptionsMade)

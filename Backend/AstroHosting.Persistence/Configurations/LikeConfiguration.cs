@@ -4,13 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AstroHosting.Persistence.Configurations
 {
-    public class LikeConfiguration : IEntityTypeConfiguration<Like>
+    public class LikeConfiguration : BaseEntityConfiguration<Like>
     {
-        public void Configure(EntityTypeBuilder<Like> builder)
+        public override void Configure(EntityTypeBuilder<Like> builder)
         {
             builder.ToTable("Likes");
-
-            builder.HasKey(l => l.Id);
 
             builder.HasOne(l => l.User)
                 .WithMany(u => u.Likes)
