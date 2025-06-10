@@ -27,7 +27,7 @@ namespace AstroHosting.Persistence.Repositories
             }
             catch (Exception)
             {
-                _logger.LogError(message: $"Failed on adding entity {typeof(T)}");
+                _logger.LogError("Failed on adding entity {EntityType}", typeof(T));
             }
         }
 
@@ -41,7 +41,7 @@ namespace AstroHosting.Persistence.Repositories
             }
             catch (Exception)
             {
-                _logger.LogError(message: $"Failed on deleting entity {typeof(T)}");
+                _logger.LogError("Failed on deleting entity {EntityType}", typeof(T));
             }
         }
 
@@ -91,7 +91,7 @@ namespace AstroHosting.Persistence.Repositories
             }
             catch (Exception)
             {
-                _logger.LogError(message: $"Failed on updating entity {typeof(T)}");
+                _logger.LogError("Failed on updating entity {EntityType}", typeof(T));
             }
         }
     }
