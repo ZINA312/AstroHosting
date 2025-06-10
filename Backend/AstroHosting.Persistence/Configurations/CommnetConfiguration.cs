@@ -4,20 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AstroHosting.Persistence.Configurations
 {
-    public class CommentConfiguration : IEntityTypeConfiguration<Comment>
+    public class CommentConfiguration : BaseEntityConfiguration<Comment>
     {
-        public void Configure(EntityTypeBuilder<Comment> builder)
+        public override void Configure(EntityTypeBuilder<Comment> builder)
         {
             builder.ToTable("Comments");
-
-            builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Text)
                 .IsRequired()
                 .HasMaxLength(500);
-
-            builder.Property(c => c.CommentDate)
-                .IsRequired();
 
             builder.HasOne(c => c.User)
                 .WithMany(u => u.Comments)

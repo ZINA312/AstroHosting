@@ -4,13 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AstroHosting.Persistence.Configurations
 {
-    public class PostConfiguration : IEntityTypeConfiguration<Post>
+    public class PostConfiguration : BaseEntityConfiguration<Post>
     {
-        public void Configure(EntityTypeBuilder<Post> builder)
+        public override void Configure(EntityTypeBuilder<Post> builder)
         {
             builder.ToTable("Posts");
-
-            builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Title)
                 .IsRequired()
@@ -23,9 +21,6 @@ namespace AstroHosting.Persistence.Configurations
             builder.Property(p => p.ImageUrl)
                 .IsRequired()
                 .HasMaxLength(255);
-
-            builder.Property(p => p.UploadDate)
-                .IsRequired();
 
             builder.HasOne(p => p.Author)
                 .WithMany(u => u.Posts)

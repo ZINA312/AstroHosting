@@ -4,13 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AstroHosting.Persistence.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class UserConfiguration : BaseEntityConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("Users");
-
-            builder.HasKey(u => u.Id);
 
             builder.Property(u => u.Username)
                 .IsRequired()
@@ -23,9 +21,6 @@ namespace AstroHosting.Persistence.Configurations
             builder.Property(u => u.PasswordHash)
                 .IsRequired()
                 .HasMaxLength(255);
-
-            builder.Property(u => u.RegistrationDate)
-                .IsRequired();
 
             builder.Property(u => u.AvatarUrl)
                 .HasMaxLength(255)

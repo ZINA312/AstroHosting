@@ -1,12 +1,10 @@
 ﻿namespace AstroHosting.Core.Entities
 {
-    public class User
+    public class User : Entity
     {
-        public Guid Id { get; set; }
         public string Username { get; set; } = string.Empty;
         public string Login { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
-        public DateTime RegistrationDate { get; set; }
         public string AvatarUrl { get; set; } = string.Empty;
         public string Bio { get; set; } = string.Empty;
         public List<Subscription> SubscriptionsMade { get; set; } = []; 
