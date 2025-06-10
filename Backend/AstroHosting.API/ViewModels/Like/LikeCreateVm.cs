@@ -2,6 +2,6 @@
 {
     public class LikeCreateVm
     {
-        public string PostId { get; set; } = null!;
+        public Guid PostId { get; set; }
     }
 }

@@ -2,9 +2,9 @@
 {
     public class PostUpdateVm
     {
-        public string Id { get; set; } = null!;
+        public Guid Id { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public string IsDeleted { get; set; } = null!;
+        public bool IsDeleted { get; set; }
     }
 }

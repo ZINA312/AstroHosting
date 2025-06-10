@@ -8,18 +8,11 @@ namespace AstroHosting.API.MappingProfiles
     {
         public LikeProfile()
         {
-            CreateMap<LikeVm, LikeDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)))
-                .ForMember(dest => dest.PostId, opt => opt.MapFrom(src => Guid.Parse(src.PostId)))
-                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
+            CreateMap<LikeVm, LikeDto>();
 
-            CreateMap<LikeDto, LikeVm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
-                .ForMember(dest => dest.PostId, opt => opt.MapFrom(src => src.PostId.ToString()))
-                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
+            CreateMap<LikeDto, LikeVm>();
 
-            CreateMap<LikeCreateVm, LikeCreateDto>()
-                .ForMember(dest => dest.PostId, opt => opt.MapFrom(src => Guid.Parse(src.PostId)));
+            CreateMap<LikeCreateVm, LikeCreateDto>();
         }
     }
 }

@@ -4,9 +4,9 @@ namespace AstroHosting.API.ViewModels.Subscription
 {
     public class SubscriptionVm
     {
-        public string Id { get; set; } = null!;
+        public Guid Id { get; set; }
         public UserShortVm Subscriber { get; set; } = null!;
         public UserShortVm TargetUser { get; set; } = null!;
-        public string SubscriptionDate { get; set; } = null!;
+        public DateTime SubscriptionDate { get; set; }
     }
 }

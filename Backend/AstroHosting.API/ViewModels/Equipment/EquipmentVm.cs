@@ -4,10 +4,10 @@ namespace AstroHosting.API.ViewModels.Equipment
 {
     public class EquipmentVm
     {
-        public string Id { get; set; } = null!;
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Manufacturer { get; set; } = string.Empty;
-        public string Type { get; set; } = null!;
+        public EquipmentTypes Type { get; set; }
         public Dictionary<string, string> Specifications { get; set; } = [];
     }
 }

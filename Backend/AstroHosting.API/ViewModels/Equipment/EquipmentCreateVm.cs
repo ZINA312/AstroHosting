@@ -6,7 +6,7 @@ namespace AstroHosting.API.ViewModels.Equipment
     {
         public string Name { get; set; } = null!;
         public string Manufacturer { get; set; } = string.Empty;
-        public string Type { get; set; } = null!;
+        public EquipmentTypes Type { get; set; }
         public Dictionary<string, string>? Specifications { get; set; } = null;
     }
 }

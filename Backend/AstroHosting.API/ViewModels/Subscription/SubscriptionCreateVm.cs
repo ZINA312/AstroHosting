@@ -2,6 +2,6 @@
 {
     public class SubscriptionCreateVm
     {
-        public string TargetUserId { get; set; } = null!;
+        public Guid TargetUserId { get; set; }
     }
 }
