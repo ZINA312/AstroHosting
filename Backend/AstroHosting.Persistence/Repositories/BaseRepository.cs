@@ -9,7 +9,6 @@ namespace AstroHosting.Persistence.Repositories
         private readonly AstroHostingDBContext _context;
         private readonly ILogger _logger;
         protected DbSet<T> _entities;
-        private bool disposed = false;
 
         public BaseRepository(AstroHostingDBContext dbContext, ILogger logger)
         {
@@ -43,23 +42,6 @@ namespace AstroHosting.Persistence.Repositories
             {
                 _logger.LogError("Failed on deleting entity {EntityType}", typeof(T));
             }
-        }
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         public async Task<T?> FindAsync(System.Linq.Expressions.Expression<Func<T, bool>> predicate)

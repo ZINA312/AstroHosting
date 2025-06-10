@@ -2,7 +2,7 @@
 
 namespace AstroHosting.Persistence.Repositories
 {
-    public interface IRepository<T> : IDisposable
+    public interface IRepository<T>
     {
         Task<T?> GetByIdAsync(Guid id);
         Task<IEnumerable<T>> GetAllAsync();
