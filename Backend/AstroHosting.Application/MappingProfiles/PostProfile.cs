@@ -9,7 +9,6 @@ namespace AstroHosting.Application.MappingProfiles
         public PostProfile()
         {
             CreateMap<Post, PostDto>()
-                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => src.UploadDate))
                 .ForMember(dest => dest.LikesCount, opt => opt.MapFrom(src => src.Likes.Count))
                 .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count));
 
@@ -18,9 +17,11 @@ namespace AstroHosting.Application.MappingProfiles
                 .ForMember(dest => dest.LikedBy, opt => opt.MapFrom(src => src.Likes.Select(l => l.User)));
 
             CreateMap<PostCreateDto, Post>()
-                .ForMember(dest => dest.UploadDate, opt => opt.MapFrom(src => DateTime.UtcNow));
+                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(dest => dest.DateUpdated, opt => opt.MapFrom(src => DateTime.UtcNow));
 
             CreateMap<PostUpdateDto, Post>()
+                .ForMember(dest => dest.DateUpdated, opt => opt.MapFrom(src => DateTime.UtcNow))
                 .ForMember(dest => dest.DeletedDate, opt => opt.MapFrom(src => src.IsDeleted ? DateTime.UtcNow : (DateTime?)null));
         }
     }

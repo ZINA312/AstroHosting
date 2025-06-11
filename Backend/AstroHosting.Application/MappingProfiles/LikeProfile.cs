@@ -11,7 +11,7 @@ namespace AstroHosting.Application.MappingProfiles
             CreateMap<Like, LikeDto>();
 
             CreateMap<LikeCreateDto, Like>()
-                .ForMember(dest => dest.LikeDate, opt => opt.MapFrom(src => DateTime.UtcNow));
+                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => DateTime.UtcNow));
         }
     }
 }

@@ -8,10 +8,12 @@ namespace AstroHosting.Application.MappingProfiles
     {
         public CommentProfile() 
         {
-            CreateMap<Comment, CommentDto>();
+            CreateMap<Comment, CommentDto>()
+                .ForMember(dest => dest.CommentDate, opt => opt.MapFrom(src => src.DateCreated));
 
             CreateMap<CommentCreateDto, Comment>()
-                .ForMember(dest => dest.CommentDate, opt => opt.MapFrom(src => DateTime.UtcNow));
+                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(dest => dest.DateUpdated, opt => opt.MapFrom(src => DateTime.UtcNow));
         }
     }
 }

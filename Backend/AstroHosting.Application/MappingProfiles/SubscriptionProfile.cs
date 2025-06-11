@@ -8,10 +8,11 @@ namespace AstroHosting.Application.MappingProfiles
     {
         public SubscriptionProfile()
         {
-            CreateMap<Subscription, SubscriptionDto>();
+            CreateMap<Subscription, SubscriptionDto>()
+                .ForMember(dest => dest.SubscriptionDate, opt => opt.MapFrom(src => src.DateCreated));
 
             CreateMap<SubscriptionCreateDto, Subscription>()
-                .ForMember(dest => dest.SubscriptionDate, opt => opt.MapFrom(src => DateTime.UtcNow));
+                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => DateTime.UtcNow));
         }
     }
 }

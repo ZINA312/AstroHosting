@@ -10,7 +10,9 @@ namespace AstroHosting.Application.MappingProfiles
         {
             CreateMap<Equipment, EquipmentDto>();
 
-            CreateMap<EquipmentCreateDto, Equipment>();
+            CreateMap<EquipmentCreateDto, Equipment>()
+                .ForMember(dest => dest.Specifications, opt => opt.MapFrom(src => src.Specifications ?? new Dictionary<string, string>()))
+                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => DateTime.UtcNow));
         }
     }
 }
