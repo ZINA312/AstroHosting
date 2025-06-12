@@ -6,7 +6,7 @@ namespace AstroHosting.Persistence.Repositories.SubscriptionRepository
 {
     public class SubscriptionRepository : BaseRepository<Subscription>, ISubscriptionRepository
     {
-        public SubscriptionRepository(AstroHostingDBContext dbcontext, ILogger logger) : base(dbcontext, logger) { }
+        public SubscriptionRepository(AstroHostingDBContext dbcontext, ILogger<Subscription> logger) : base(dbcontext, logger) { }
 
     }
 }

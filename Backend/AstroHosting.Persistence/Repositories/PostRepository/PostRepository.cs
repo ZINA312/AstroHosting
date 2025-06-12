@@ -6,7 +6,7 @@ namespace AstroHosting.Persistence.Repositories.PostRepository
 {
     public class PostRepository : BaseRepository<Post>, IPostRepository
     {
-        public PostRepository(AstroHostingDBContext dbcontext, ILogger logger) : base(dbcontext, logger) { }
+        public PostRepository(AstroHostingDBContext dbcontext, ILogger<Post> logger) : base(dbcontext, logger) { }
 
     }
 }

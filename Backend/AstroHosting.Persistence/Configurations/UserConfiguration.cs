@@ -32,6 +32,11 @@ namespace AstroHosting.Persistence.Configurations
                 .HasMaxLength(500)
                 .IsRequired(false);
 
+            builder.Property(u => u.RefreshToken)
+                .HasMaxLength(88)
+                .IsRequired(false);
+
+            builder.Property(u => u.RefreshTokenExpiry);
         }
     }
 }
