@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroHosting.Persistence", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroHosting.Application", "AstroHosting.Application\AstroHosting.Application.csproj", "{0326E9FE-7683-4201-BEFA-0B0A79450A60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroHosting.Infrastructure", "AstroHosting.Infrastructure\AstroHosting.Infrastructure.csproj", "{5BAE456E-D7AC-4629-B761-E7925A60A7C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0326E9FE-7683-4201-BEFA-0B0A79450A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0326E9FE-7683-4201-BEFA-0B0A79450A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0326E9FE-7683-4201-BEFA-0B0A79450A60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BAE456E-D7AC-4629-B761-E7925A60A7C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BAE456E-D7AC-4629-B761-E7925A60A7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BAE456E-D7AC-4629-B761-E7925A60A7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BAE456E-D7AC-4629-B761-E7925A60A7C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

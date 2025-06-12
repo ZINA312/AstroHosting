@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AstroHosting.Application.Services.UserService;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AstroHosting.Application
 {
@@ -6,6 +7,7 @@ namespace AstroHosting.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
