@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthMock } from '../context/AuthContext';
 
@@ -10,12 +9,12 @@ const UserNavigationComponent = () => {
         {isAuthenticated ? (
             <>
                 <li className="user-nav-item">
-                    <Link to="/upload" className="user-nav-link">
+                    <Link to="/post-upload" className="user-nav-link">
                     Upload
                     </Link>
                 </li>
                 <li className="user-nav-item">
-                    <Link to="/profile" className="user-nav-link">
+                    <Link to="/user/1" className="user-nav-link">
                     <span className="user-name">Profile</span>
                     </Link>
                 </li>

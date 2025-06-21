@@ -29,8 +29,8 @@ nav input {
   border-radius: 24px;
   font-size: 0.9rem;
   min-width: 250px;
-  background-color: #0f3460;
-  color: #e6e6e6;
+  background-color: #313031;
+  color: #e0e0ff;
   transition: all 0.3s ease;
   outline: none;
 }
@@ -47,7 +47,7 @@ nav input:focus {
 
 nav a {
   text-decoration: none;
-  color: #e6e6e6;
+  color: #e0e0ff;
   font-weight: 500;
   position: relative;
   padding: 0.5rem 0;
@@ -76,7 +76,7 @@ nav a.active::after {
 
 .auth-toggle {
   background: none;
-  color: white;
+  color: #e0e0ff;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;

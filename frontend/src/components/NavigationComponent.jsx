@@ -6,8 +6,8 @@ const NavigationComponent = () =>(
         <ul>
             <div class="navigationLinks">
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/astrophotography">Astrophotography</Link></li>
-                <li><Link to="/photographers">Photographers</Link></li>
+                <li><Link to="/recent-posts">Astrophotography</Link></li>
+                <li><Link to="/popular-users">Photographers</Link></li>
             </div>
             <li><input placeholder='Search'></input></li>
             <UserNavigation></UserNavigation>
