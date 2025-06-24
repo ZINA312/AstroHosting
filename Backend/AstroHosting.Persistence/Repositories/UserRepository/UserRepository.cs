@@ -13,8 +13,9 @@ namespace AstroHosting.Persistence.Repositories.UserRepository
         {
             try
             {
-                var result = await _entities.FirstOrDefaultAsync(u => u.Login == login);
-                _logger.LogInformation("Retrieved user by login: {Login}", login);
+                var result = await _entities
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.Login == login);
                 return result;
             }
             catch (Exception ex)
@@ -22,6 +23,25 @@ namespace AstroHosting.Persistence.Repositories.UserRepository
                 _logger.LogError(ex, "Failed to retrieve user by login: {Login}", login);
                 throw;
             }
+        }
+        public async Task<User?> GetUserProfileByIdAsync(Guid id) 
+        {
+            return await _entities
+                .Where(u => u.Id == id)
+                .Include(u => u.Posts) 
+                .Include(u => u.SubscriptionsMade) 
+                .Include(u => u.SubscriptionsReceived) 
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<User?> GetUserWithAvatarByIdAsync(Guid id) 
+        {
+            return await _entities
+                .AsNoTracking()
+                .Where(u => u.Id == id)
+                .Select(u => new User { Id = u.Id, AvatarUrl = u.AvatarUrl }) 
+                .FirstOrDefaultAsync();
         }
     }
 }

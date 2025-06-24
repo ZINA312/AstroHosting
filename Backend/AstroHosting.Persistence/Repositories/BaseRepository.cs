@@ -76,5 +76,10 @@ namespace AstroHosting.Persistence.Repositories
                 _logger.LogError("Failed on updating entity {EntityType}", typeof(T));
             }
         }
+
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _entities.FindAsync(id) != null;
+        }
     }
 }
