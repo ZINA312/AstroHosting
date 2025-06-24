@@ -13,6 +13,10 @@ namespace AstroHosting.API.MappingProfiles
             CreateMap<CommentDto, CommentVm>();
 
             CreateMap<CommentCreateVm, CommentCreateDto>();
+
+            CreateMap<CommentUpdateDto, CommentUpdateVm>();
+
+            CreateMap<CommentUpdateVm, CommentUpdateDto>();
         }
     }
 }

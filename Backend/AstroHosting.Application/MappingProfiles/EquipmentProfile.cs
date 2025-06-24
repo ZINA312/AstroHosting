@@ -8,11 +8,17 @@ namespace AstroHosting.Application.MappingProfiles
     {
         public EquipmentProfile()
         {
-            CreateMap<Equipment, EquipmentDto>();
+            CreateMap<Equipment, EquipmentDto>()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())); ;
 
             CreateMap<EquipmentCreateDto, Equipment>()
-                .ForMember(dest => dest.Specifications, opt => opt.MapFrom(src => src.Specifications ?? new Dictionary<string, string>()))
-                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => DateTime.UtcNow));
+                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(dest => dest.DateUpdated, opt => opt.MapFrom(src => DateTime.UtcNow)) 
+                .ForMember(dest => dest.Specifications, opt => opt.MapFrom(src => src.Specifications ?? new Dictionary<string, string>()));
+
+            CreateMap<EquipmentUpdateDto, Equipment>()
+                .ForMember(dest => dest.DateUpdated, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(dest => dest.Specifications, opt => opt.MapFrom(src => src.Specifications ?? new Dictionary<string, string>()));
         }
     }
 }

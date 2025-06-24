@@ -5,6 +5,8 @@
         public Guid Id { get; set; }
         public string Username { get; set; } = null!;
         public string AvatarUrl { get; set; } = null!;
+        public Stream? NewAvatarFileStream { get; set; }
+        public string? NewAvatarFileName { get; set; }
         public string Bio { get; set; } = string.Empty;
     }
 }

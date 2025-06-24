@@ -10,11 +10,13 @@ namespace AstroHosting.Application.MappingProfiles
         {
             CreateMap<Post, PostDto>()
                 .ForMember(dest => dest.LikesCount, opt => opt.MapFrom(src => src.Likes.Count))
-                .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count));
+                .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count))
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Author));
 
             CreateMap<Post, PostDetailsDto>()
                 .IncludeBase<Post, PostDto>()
-                .ForMember(dest => dest.LikedBy, opt => opt.MapFrom(src => src.Likes.Select(l => l.User)));
+                .ForMember(dest => dest.LikedBy, opt => opt.MapFrom(src => src.Likes.Select(l => l.User)))
+                .ForMember(dest => dest.EquipmentUsed, opt => opt.MapFrom(src => src.EquipmentUsed.Select(pe => pe.Equipment)));
 
             CreateMap<PostCreateDto, Post>()
                 .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => DateTime.UtcNow))
