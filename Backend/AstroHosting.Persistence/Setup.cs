@@ -3,6 +3,7 @@ using AstroHosting.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Reflection;
 
 namespace AstroHosting.Persistence
@@ -12,7 +13,7 @@ namespace AstroHosting.Persistence
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AstroHostingDBContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));       
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             return services;
         }
