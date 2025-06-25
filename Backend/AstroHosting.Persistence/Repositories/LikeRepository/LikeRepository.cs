@@ -6,6 +6,6 @@ namespace AstroHosting.Persistence.Repositories.LikeRepository
 {
     public class LikeRepository : BaseRepository<Like>, ILikeRepository
     {
-        public LikeRepository(AstroHostingDBContext dbcontext, ILogger logger) : base(dbcontext, logger) { }
+        public LikeRepository(AstroHostingDBContext dbcontext, ILogger<Like> logger) : base(dbcontext, logger) { }
     }
 }

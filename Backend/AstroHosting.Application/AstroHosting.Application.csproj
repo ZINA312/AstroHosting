@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AstroHosting.Core\AstroHosting.Core.csproj" />
+    <ProjectReference Include="..\AstroHosting.Infrastructure\AstroHosting.Infrastructure.csproj" />
     <ProjectReference Include="..\AstroHosting.Persistence\AstroHosting.Persistence.csproj" />
   </ItemGroup>
 </Project>

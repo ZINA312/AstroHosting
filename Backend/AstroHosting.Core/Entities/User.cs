@@ -7,6 +7,8 @@
         public string PasswordHash { get; set; } = string.Empty;
         public string AvatarUrl { get; set; } = string.Empty;
         public string Bio { get; set; } = string.Empty;
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiry { get; set; }
         public List<Subscription> SubscriptionsMade { get; set; } = []; 
         public List<Subscription> SubscriptionsReceived { get; set; } = []; 
         public List<Post> Posts { get; set; } = [];

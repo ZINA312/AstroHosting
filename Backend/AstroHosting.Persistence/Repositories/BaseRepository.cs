@@ -4,13 +4,13 @@ using Microsoft.Extensions.Logging;
 
 namespace AstroHosting.Persistence.Repositories
 {
-    public abstract class BaseRepository<T> : IRepository<T> where T : class
+    public class BaseRepository<T> : IRepository<T> where T : class
     {
         private readonly AstroHostingDBContext _context;
-        private readonly ILogger _logger;
+        protected readonly ILogger<T> _logger;
         protected DbSet<T> _entities;
 
-        public BaseRepository(AstroHostingDBContext dbContext, ILogger logger)
+        public BaseRepository(AstroHostingDBContext dbContext, ILogger<T> logger)
         {
             _context = dbContext;
             _logger = logger;

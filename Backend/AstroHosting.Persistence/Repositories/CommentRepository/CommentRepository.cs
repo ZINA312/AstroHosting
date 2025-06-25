@@ -6,6 +6,6 @@ namespace AstroHosting.Persistence.Repositories.CommentRepository
 {
     public class CommentRepository : BaseRepository<Comment>, ICommentRepository
     {
-        public CommentRepository(AstroHostingDBContext dbcontext, ILogger logger) : base(dbcontext, logger) { }
+        public CommentRepository(AstroHostingDBContext dbcontext, ILogger<Comment> logger) : base(dbcontext, logger) { }
     }
 }
