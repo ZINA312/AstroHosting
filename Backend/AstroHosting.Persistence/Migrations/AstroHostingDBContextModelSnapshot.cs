@@ -249,6 +249,13 @@ namespace AstroHosting.Persistence.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("RefreshToken")
+                        .HasMaxLength(88)
+                        .HasColumnType("nvarchar(88)");
+
+                    b.Property<DateTime>("RefreshTokenExpiry")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)

@@ -6,6 +6,6 @@ namespace AstroHosting.Persistence.Repositories.EquipmentRepository
 {
     public class EquipmentRepository : BaseRepository<Equipment>, IEquipmentRepository
     {
-        public EquipmentRepository(AstroHostingDBContext dbcontext, ILogger logger) : base(dbcontext, logger) { }
+        public EquipmentRepository(AstroHostingDBContext dbcontext, ILogger<Equipment> logger) : base(dbcontext, logger) { }
     }
 }

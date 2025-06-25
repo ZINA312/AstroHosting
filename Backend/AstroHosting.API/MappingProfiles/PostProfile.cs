@@ -8,12 +8,11 @@ namespace AstroHosting.API.MappingProfiles
     {
         public PostProfile()
         {
-            CreateMap<PostVm, PostDto>();
+            CreateMap<PostVm, PostDto>().ReverseMap();
 
             CreateMap<PostDto, PostVm>();
 
-            CreateMap<PostDetailsVm, PostDetailsDto>()
-                .IncludeBase<PostVm, PostDto>();
+            CreateMap<PostDetailsVm, PostDetailsDto>().ReverseMap();
 
             CreateMap<PostDetailsDto, PostDetailsVm>()
                 .IncludeBase<PostDto, PostVm>();

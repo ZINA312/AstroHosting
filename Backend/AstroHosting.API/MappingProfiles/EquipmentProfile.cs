@@ -13,6 +13,8 @@ namespace AstroHosting.API.MappingProfiles
             CreateMap<EquipmentDto, EquipmentVm>();
 
             CreateMap<EquipmentCreateVm, EquipmentCreateDto>();
+
+            CreateMap<EquipmentUpdateVm, EquipmentUpdateDto>();
         }
     }
 }

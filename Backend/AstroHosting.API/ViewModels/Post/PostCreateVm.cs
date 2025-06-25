@@ -4,7 +4,7 @@
     {
         public string Title { get; set; } = null!;
         public string Description { get; set; } = string.Empty;
-        public string ImageUrl { get; set; } = null!;
+        public IFormFile ImageFile { get; set; } = null!;
         public List<Guid>? EquipmentIds { get; set; } = null;
     }
 }
