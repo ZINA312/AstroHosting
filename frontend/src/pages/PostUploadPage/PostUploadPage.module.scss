@@ -1,0 +1,108 @@
+@use '../../assets/variables' as var;
+@use '../../assets/mixins' as mixins;
+
+.create-post-page {
+  @include mixins.flex-center();
+  min-height: 100vh;
+  background-color: var.$primary-bg;
+  padding: var.$spacing-lg;
+}
+
+.create-post-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  z-index: 1;
+}
+
+.create-post-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  opacity: 0.2;
+  z-index: -1;
+  border-radius: var.$border-radius-xl;
+}
+
+.post-form-card {
+  background: var.$card-bg;
+  border-radius: var.$border-radius-xl;
+  padding: var.$spacing-xl;
+  box-shadow: var.$shadow-lg;
+  border: 1px solid var.$border-color;
+  backdrop-filter: blur(10px);
+}
+
+.form-title {
+  color: var.$text-color;
+  text-align: center;
+  font-size: var.$font-size-xxl;
+  margin-bottom: var.$spacing-sm;
+  text-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+}
+
+.form-subtitle {
+  color: var.$secondary-text-color;
+  text-align: center;
+  font-size: var.$font-size-md;
+  margin-bottom: var.$spacing-xxl;
+}
+
+.form-error {
+  background: var.$error-bg;
+  color: var.$error-text;
+  padding: var.$spacing-md;
+  border-radius: var.$border-radius-sm;
+  margin-bottom: var.$spacing-lg;
+  border: 1px solid rgba(217, 48, 37, 0.4);
+  text-align: center;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: var.$spacing-xl;
+}
+
+.submit-button {
+  background: var.$gradient-purple-blue;
+  color: white;
+  border: none;
+  padding: 16px; 
+  border-radius: var.$border-radius-md;
+  font-size: var.$font-size-md;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var.$transition-ease;
+  width: 100%;
+  margin-top: var.$spacing-sm;
+  position: relative;
+  overflow: hidden;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: var.$shadow-md;
+  }
+
+  &:disabled {
+    background: linear-gradient(45deg, #4a0d9a, #1c5bc0); 
+    cursor: not-allowed;
+  }
+}
+
+.button-spinner {
+  @include mixins.spinner($size: 24px, $border-width: 3px, $color: rgba(255, 255, 255, 0.3), $top-color: white);
+  margin: 0 auto;
+}
+
+.create-post-loading {
+  @include mixins.flex-center();
+  height: 100vh;
+}
+
+.spinner {
+  @include mixins.spinner($size: 50px, $border-width: 5px, $color: rgba(106, 17, 203, 0.3), $top-color: #6a11cb);
+}

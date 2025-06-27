@@ -1,0 +1,19 @@
+@import '../../../assets/variables';
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md; 
+}
+
+.auth-link {
+  color: $gradient-start;
+  text-decoration: none;
+  font-weight: 600;
+  transition: $auth-transition-ease;
+
+  &:hover {
+    color: $auth-link-hover;
+    text-decoration: underline;
+  }
+}

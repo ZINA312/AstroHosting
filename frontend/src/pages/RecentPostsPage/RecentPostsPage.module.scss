@@ -1,0 +1,300 @@
+@import '../../assets/variables';
+@import '../../assets/mixins';
+
+.recent-photos-page {
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 30px 20px;
+  background-color: $recent-posts-bg;
+  color: $text-color-light;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 20px 15px;
+  }
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: $page-title-color;
+  font-size: 2.8rem;
+  position: relative;
+  padding-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 700;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 200px;
+    height: 4px;
+    background: linear-gradient(to right, $gradient-start, $gradient-end);
+    margin: 10px auto 40px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    letter-spacing: 2px;
+    &::after {
+      width: 150px;
+      margin: 10px auto 30px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    &::after {
+      width: 100px;
+      margin: 8px auto 25px;
+    }
+  }
+}
+
+.page-subtitle {
+  text-align: center;
+  font-size: 1.3rem;
+  color: $page-subtitle-color;
+  margin-bottom: 50px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+}
+
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  padding: 0;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+.photo-card {
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  box-shadow: $photo-card-shadow;
+  position: relative;
+  z-index: 1;
+  height: 320px;
+  cursor: pointer;
+  transition: $transition-ease;
+
+  &:hover {
+    box-shadow: $photo-card-hover-shadow;
+    transform: translateY(-5px);
+    z-index: 2;
+  }
+
+  @media (max-width: 480px) {
+    height: 280px;
+  }
+}
+
+.photo-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: transform 0.5s ease;
+
+  .photo-card:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $photo-overlay-bg;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 25px;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-align: center;
+  
+}
+
+.photo-overlay .overlay-content {
+  width: 100%;
+}
+
+.photo-overlay h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: $overlay-title-color;
+  text-shadow: $overlay-title-shadow;
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+}
+
+.photo-overlay .description {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 25px;
+  color: $overlay-description-color;
+
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 4.5em; 
+  
+  @media (max-width: 480px) {
+    -webkit-line-clamp: 1; 
+    max-height: 3em;
+  }
+}
+
+.photo-overlay .post-meta {
+  padding: 15px;
+  font-size: 0.95rem;
+  background: $post-meta-bg;
+  border-radius: $border-radius-md;
+  border-left: $post-meta-border-left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+.photo-overlay .author-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.photo-overlay .author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: $border-radius-round;
+  object-fit: cover;
+  border: 2px solid $author-avatar-border-color;
+}
+
+.photo-overlay .stats {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  font-size: 1rem;
+
+  @media (max-width: 480px) {
+    gap: 15px;
+    font-size: 0.9rem;
+  }
+}
+
+.photo-overlay .likes {
+  color: $likes-color;
+}
+
+.photo-overlay .comments {
+  color: $comments-color;
+}
+
+.photo-overlay .date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: $date-color;
+  font-size: 0.9rem;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+}
+
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  font-size: 1.5rem;
+  color: $loading-text-color;
+  text-align: center;
+}
+
+.spinner {
+  border: 8px solid $spinner-border-color;
+  border-top: 8px solid $spinner-top-border-color;
+  border-radius: $border-radius-round;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: $error-message-color;
+  font-weight: bold;
+}
+
+.no-posts-found {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+  color: $page-subtitle-color;
+  background-color: $no-posts-bg;
+  border-radius: $border-radius-lg;
+  margin-top: 30px;
+
+  @media (max-width: 768px) {
+    padding: 30px;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px;
+    font-size: 1rem;
+  }
+}

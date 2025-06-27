@@ -1,0 +1,106 @@
+$nav-bg: #1a1a2e;
+$border-color: #2d4059;
+$input-bg: #313031;
+$text-color: #e0e0ff;
+$placeholder-color: #8a8a8a;
+$focus-color: rgba(41, 86, 182, 0.781);
+$hover-color: #4568db;
+$transition-time: 0.3s;
+
+nav {
+  background-color: $nav-bg;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid $border-color;
+
+  .navigationLinks {
+    display: flex;
+    gap: 2rem;
+  }
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 2.5rem;
+
+    li {
+      margin: 0;
+    }
+  }
+
+  input {
+    padding: 0.8rem 1.5rem;
+    border: 1px solid $border-color;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    min-width: 250px;
+    background-color: $input-bg;
+    color: $text-color;
+    transition: all $transition-time ease;
+    outline: none;
+
+    &::placeholder {
+      color: $placeholder-color;
+    }
+
+    &:focus {
+      border-color: $focus-color;
+      box-shadow: 0 0 0 3px $focus-color;
+      background-color: darken($nav-bg, 5%);
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: $text-color;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: color $transition-time ease;
+
+    &:hover {
+      color: $hover-color;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: $hover-color;
+      transition: width $transition-time ease;
+    }
+
+    &:hover::after,
+    &.active::after {
+      width: 100%;
+    }
+  }
+
+  .auth-toggle {
+    background: none;
+    color: $text-color;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+    border-radius: 50%;
+    transition: all $transition-time ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+      transform: scale(1.1);
+    }
+  }
+}

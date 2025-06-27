@@ -1,0 +1,47 @@
+@import '../../../../assets/variables';
+@import '../../../../assets/mixins';
+
+.auth-card {
+  background: $auth-card-bg;
+  border-radius: $border-radius-md;
+  padding: $auth-card-padding;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: $auth-card-shadow;
+  border: 1px solid rgba($gradient-start, 0.3); 
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(10px);
+}
+
+.auth-title {
+  color: $section-title-color;
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  text-shadow: $shadow-purple-text;
+}
+
+.auth-subtitle {
+  color: $date-color;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.auth-error {
+  background: $auth-error-bg;
+  color: $likes-color; 
+  padding: 15px;
+  border-radius: $border-radius-sm;
+  margin-bottom: $spacing-md;
+  border: 1px solid $auth-error-border;
+  text-align: center;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 25px;
+  color: $date-color; 
+  font-size: 0.95rem;
+}

@@ -1,0 +1,32 @@
+@import '../../../../assets/variables';
+
+.label {
+  color: $section-title-color; 
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input {
+  width: 100%;
+  padding: $auth-input-padding;
+  border-radius: 10px;
+  border: 1px solid rgba($gradient-start, 0.3);
+  background: $auth-input-bg;
+  color: $text-color;
+  font-size: 1rem;
+  transition: $auth-transition-ease;
+  box-sizing: border-box; 
+
+  &:focus {
+    outline: none;
+    border-color: $gradient-start;
+    box-shadow: $auth-input-focus-shadow;
+    background: $auth-input-bg-focus;
+  }
+
+  &[rows] { 
+    resize: vertical;
+    min-height: 80px;
+  }
+}

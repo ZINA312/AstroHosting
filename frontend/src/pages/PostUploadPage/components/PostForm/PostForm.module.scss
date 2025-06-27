@@ -1,0 +1,32 @@
+@use '../../../../assets/variables' as var;
+@use '../../../../assets/mixins' as mixins;
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    color: var.$text-color;
+    font-size: var.$font-size-base;
+    margin-bottom: var.$spacing-sm;
+    font-weight: 500;
+  }
+}
+
+.form-input, .form-textarea {
+  width: 95%; 
+  padding: var.$spacing-md var.$spacing-lg;
+  border-radius: var.$border-radius-md;
+  border: 1px solid var.$border-color;
+  background: var.$input-bg;
+  color: var.$text-color;
+  font-size: var.$font-size-base;
+  transition: var.$transition-ease;
+
+  @include mixins.input-focus-effect();
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px; 
+}

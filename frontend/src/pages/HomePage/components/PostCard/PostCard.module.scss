@@ -1,0 +1,131 @@
+@import '../../../../assets/variables';
+@import '../../../../assets/mixins';
+
+.slide-background, .photo-image {
+  width: 100%;
+  height: 100%;
+  @include background-cover;
+  position: relative;
+}
+
+.slide-overlay {
+  @include absolute-fill;
+  background: $overlay-bg-dark;
+  @include flex-center;
+  padding: $spacing-xl;
+  box-sizing: border-box;
+  opacity: 0; 
+  transition: $transition-opacity;
+
+  .overlay-content {
+    width: 100%;
+    max-width: 800px;
+
+    h3 {
+      font-size: 2.5rem;
+      margin-bottom: $spacing-md;
+      color: $white-color;
+      text-shadow: $shadow-purple-text;
+    }
+
+    .description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: $spacing-lg;
+      color: $section-title-color;
+    }
+  }
+}
+
+.photo-card {
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  box-shadow: $shadow-light;
+  position: relative;
+  z-index: 1;
+  height: 300px;
+  @include background-cover;
+
+  &:hover {
+    box-shadow: $shadow-purple-light;
+    z-index: 2;
+  }
+}
+
+.photo-overlay {
+  @include absolute-fill;
+  background: $overlay-bg-darker;
+  @include flex-center;
+  padding: $spacing-md;
+  box-sizing: border-box;
+  opacity: 0; 
+
+  .overlay-content {
+    width: 100%;
+
+    h3 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      color: $white-color;
+    }
+
+    .description {
+      font-size: 0.95rem;
+      margin-bottom: $spacing-md;
+    }
+  }
+}
+
+.post-meta {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  background: $card-bg-dark;
+  padding: $spacing-md;
+  border-radius: $border-radius-sm;
+  border-left: 3px solid $gradient-start;
+}
+
+.author-info {
+  @include flex-align-center;
+  gap: $spacing-sm;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: $border-radius-lg;
+  object-fit: cover;
+  border: 2px solid $gradient-start;
+
+  .photo-overlay & { 
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.stats {
+  display: flex;
+  gap: $spacing-md;
+  font-size: 1rem;
+}
+
+.likes, .comments {
+  @include flex-align-center;
+  gap: 5px;
+}
+
+.likes {
+  color: $likes-color;
+}
+
+.comments {
+  color: $comments-color;
+}
+
+.date {
+  @include flex-align-center;
+  gap: 5px;
+  color: $date-color;
+  font-size: 0.95rem;
+}

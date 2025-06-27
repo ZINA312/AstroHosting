@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage/HomePage';
 import './App.css';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import UserProfilePage from './pages/UserProfilePage';
-import PostPage from './pages/PostPage';
-import PostUploadPage from './pages/PostUploadPage';
-import RecentPostsPage from './pages/RecentPostsPage';
-import PopularUsersPage from './pages/PopularUsersPage';
+import LoginPage from './pages/Auth/LoginPage/LoginPage';
+import RegisterPage from './pages/Auth/RegisterPage/RegisterPage';
+import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
+import PostPage from './pages/PostPage/PostPage';
+import PostUploadPage from './pages/PostUploadPage/PostUploadPage';
+import RecentPostsPage from './pages/RecentPostsPage/RecentPostsPage';
+import PopularUsersPage from './pages/PopularUsers/PopularUsersPage';
 
 function App() {
   return (

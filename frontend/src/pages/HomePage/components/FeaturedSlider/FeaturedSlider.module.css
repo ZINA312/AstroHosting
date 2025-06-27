@@ -1,0 +1,109 @@
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.slider-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.featured-slide {
+  position: relative;
+  height: 550px;
+}
+
+:global(.slick-prev),
+:global(.slick-next) {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+:global(.slick-prev):hover,
+:global(.slick-next):hover {
+  transform: translateY(-50%) scale(1.1);
+}
+:global(.slick-prev):before,
+:global(.slick-next):before {
+  content: "";
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-left: 3px solid #ffffff;
+  border-bottom: 3px solid #ffffff;
+  transform: rotate(45deg);
+  margin-right: 5px;
+  color: #2e2c30 !important;
+  font-size: 30px !important;
+  text-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+}
+
+:global(.slick-prev) {
+  left: 20px;
+}
+
+:global(.slick-next) {
+  right: 20px;
+}
+:global(.slick-next):before {
+  transform: rotate(-135deg);
+  margin-left: 5px;
+  margin-right: 0;
+}
+
+:global(.slick-dots) {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+:global(.slick-dots) li {
+  margin: 0 5px;
+}
+:global(.slick-dots) li button:before {
+  color: #6a686d !important;
+  opacity: 0.5 !important;
+  font-size: 10px !important;
+}
+:global(.slick-dots) li.slick-active button:before {
+  color: #6a11cb !important;
+  opacity: 1 !important;
+}/*# sourceMappingURL=FeaturedSlider.module.css.map */

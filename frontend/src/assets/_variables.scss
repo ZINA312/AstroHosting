@@ -1,0 +1,213 @@
+// Colors
+$primary-bg-color: #0a0a15;
+$text-color: #f0f0f0;
+$section-title-color: #e0e0ff;
+$gradient-start: #6a11cb; 
+$gradient-end: #2575fc;   
+$overlay-bg-dark: rgba(10, 10, 30, 0.85);
+$overlay-bg-darker: rgba(10, 10, 30, 0.92);
+$card-bg-dark: rgba(0, 0, 0, 0.4);
+$likes-color: #ff6b6b;
+$comments-color: #4dabf7;
+$date-color: #a0a0c0;
+$slick-arrow-color: #2e2c30;
+$slick-dot-inactive: #6a686d;
+$slick-dot-active: #6a11cb;
+$white-color: #ffffff;
+
+$auth-card-bg: rgba(18, 18, 35, 0.95);
+$auth-input-bg: rgba(10, 10, 25, 0.7);
+$auth-input-bg-focus: rgba(10, 10, 25, 0.9);
+$auth-error-bg: rgba(217, 48, 37, 0.2);
+$auth-error-border: rgba(217, 48, 37, 0.4);
+$auth-button-disabled-start: #4a0d9a;
+$auth-button-disabled-end: #1c5bc0;
+$auth-link-hover: #8e2de2;
+
+$popular-users-bg: #0a0a15; 
+$popular-users-card-bg: #1a1a2e;
+$popular-users-title-color: #e0e0ff; 
+$popular-users-text-color: #f0f0f0; 
+$popular-users-username-color: #ffffff; 
+
+$post-page-bg: #0a0a15;
+$post-container-gap: 40px;
+$post-image-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+$post-info-bg: rgba(18, 18, 35, 0.7);
+$post-info-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+$post-info-border: 1px solid rgba(106, 17, 203, 0.3);
+$post-header-border: 1px solid rgba(255, 255, 255, 0.1);
+$author-avatar-border: 2px solid rgba(106, 17, 203, 0.5);
+$tab-border: 1px solid rgba(255, 255, 255, 0.1);
+$tab-active-color: #6a11cb;
+$equipment-card-bg: rgba(10, 10, 25, 0.5);
+$equipment-card-border: 1px solid rgba(106, 17, 203, 0.2);
+$equipment-tag-bg: rgba(106, 17, 203, 0.2);
+$spec-border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+$comment-form-bg: rgba(10, 10, 25, 0.5);
+$comment-form-border: 1px solid rgba(106, 17, 203, 0.2);
+$comment-input-bg: rgba(10, 10, 20, 0.7);
+$comment-input-border: 1px solid rgba(106, 17, 203, 0.3);
+$comment-card-bg: rgba(10, 10, 25, 0.5);
+$comment-card-border: 1px solid rgba(106, 17, 203, 0.2);
+$error-color: #ff6b6b;
+
+$primary-color: #6a11cb;
+$secondary-color: #2575fc;
+$text-color-light: #f0f0f0;
+$text-color-description: #f0f0f0;
+$text-color-muted: #a0a0c0;
+$text-color-heading: #e0e0ff;
+$gradient-start: #6a11cb;
+$gradient-end: #2575fc;
+
+$recent-posts-bg: #0a0a15;
+$page-title-color: #e0e0ff;
+$page-subtitle-color: #b0b0d0;
+$photo-card-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+$photo-card-hover-shadow: 0 10px 30px rgba(106, 17, 203, 0.4);
+$photo-overlay-bg: rgba(10, 10, 30, 0.95);
+$overlay-title-color: #ffffff;
+$overlay-title-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
+$overlay-description-color: #c0c0e0;
+$post-meta-bg: rgba(0, 0, 0, 0.5);
+$post-meta-border-left: 3px solid #2575fc;
+$author-avatar-border-color: #2575fc;
+$likes-color: #ff8080;
+$comments-color: #66b2ff;
+$date-color: #9090b0;
+$loading-text-color: #b0b0d0;
+$spinner-border-color: rgba(255, 255, 255, 0.3);
+$spinner-top-border-color: #6a11cb;
+$error-message-color: #ff6b6b;
+$no-posts-bg: rgba(30, 30, 50, 0.5);
+
+$profile-bg: #0a0a15;
+$profile-header-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+$profile-bg-gradient-start: #1a1a2e;
+$profile-bg-gradient-mid: #0f3460;
+$profile-bg-gradient-end: #16213e;
+$avatar-border-color: #0a0a15; 
+$avatar-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+$username-color: #e0e0ff;
+$username-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+$bio-color: #d0d0ff;
+$stat-value-color: #6a11cb;
+$stat-label-color: #a0a0c0;
+$join-date-bg: rgba(10, 10, 25, 0.7);
+$nav-item-color-inactive: #a0a0c0;
+$nav-item-color-hover: #e0e0ff;
+$nav-item-color-active: #6a11cb;
+$nav-item-active-border: #6a11cb;
+$post-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+$post-overlay-bg: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+$about-card-bg: rgba(18, 18, 35, 0.7);
+$about-card-border: 1px solid rgba(106, 17, 203, 0.2);
+$about-title-color: #6a11cb;
+$about-title-border: 1px solid rgba(106, 17, 203, 0.3);
+$about-text-color: #d0d0ff;
+$equipment-list-border: 1px solid rgba(255, 255, 255, 0.05);
+$spinner-color-light: rgba(106, 17, 203, 0.3);
+$spinner-color-dark: #6a11cb;
+$error-color: #ff6b6b;
+$modal-backdrop-bg: rgba(0, 0, 0, 0.85);
+$modal-bg: #121230;
+$modal-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+$modal-border: 1px solid rgba(106, 17, 203, 0.3);
+$modal-close-color: #a0a0c0;
+$modal-close-color-hover: #e0e0ff;
+$modal-title-color: #e0e0ff;
+$modal-title-bg: rgba(10, 10, 25, 0.5);
+$modal-title-border: 1px solid rgba(106, 17, 203, 0.2);
+$relation-item-bg: rgba(18, 18, 35, 0.7);
+$relation-item-hover-bg: rgba(28, 28, 55, 0.8);
+$relation-item-hover-shadow: 0 5px 15px rgba(106, 17, 203, 0.2);
+$user-avatar-border: 2px solid rgba(106, 17, 203, 0.5);
+$user-info-username-color: #e0e0ff;
+$user-info-subscription-date-color: #a0a0c0;
+$clickable-hover-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+$profile-background-url: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+$primary-bg: #0a0a15;
+$card-bg: rgba(18, 18, 35, 0.95);
+$border-color: rgba(106, 17, 203, 0.3);
+$text-color: #e0e0ff;
+$secondary-text-color: #a0a0c0;
+$input-bg: rgba(10, 10, 25, 0.7);
+$input-focus-bg: rgba(10, 10, 25, 0.9);
+$error-bg: rgba(217, 48, 37, 0.2);
+$error-text: #ff6b6b;
+$gradient-purple-blue: linear-gradient(45deg, #6a11cb, #2575fc);
+$gradient-dark-blue: linear-gradient(45deg, #1a1a2e, #0f3460);
+$placeholder-border: rgba(106, 17, 203, 0.5);
+$selected-equipment-bg: rgba(40, 40, 60, 0.7);
+$selected-equipment-border: rgba(60, 100, 200, 0.5);
+$input-bg: rgba(10, 10, 25, 0.7);
+// Fonts
+$primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+// Font Sizes
+$font-size-base: 1rem;
+$font-size-sm: 0.9rem;
+$font-size-md: 1.1rem;
+$font-size-lg: 1.2rem;
+$font-size-xl: 1.5rem;
+$font-size-xxl: 2.2rem;
+$font-size-icon: 4rem;
+
+// Spacing
+$spacing-sm: 12px;
+$spacing-md: 20px;
+$spacing-lg: 25px;
+$spacing-xl: 40px;
+$spacing-xxl: 60px;
+$spacing-card-padding: 25px;
+$spacing-grid-gap: 30px;
+$spacing-avatar-margin: 20px;
+$spacing-username-margin: 15px;
+$spacing-btn-padding: 12px 25px;
+
+// Border Radius
+$spacing-xs: 5px;
+$border-radius-sm: 8px;
+$border-radius-md: 12px;
+$border-radius-lg: 15px;
+$border-radius-xl: 20px;
+$border-radius-pill: 30px;
+$border-radius-lg: 50%; 
+$border-radius-round: 50%;
+$border-radius-avatar-frame: 50%;
+$border-radius-btn: 8px;
+
+// Box Shadow
+$shadow-light: 0 5px 20px rgba(0, 0, 0, 0.3);
+$shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.5);
+$shadow-purple-light: 0 10px 30px rgba(106, 17, 203, 0.3);
+$shadow-purple-text: 0 0 10px rgba(106, 17, 203, 0.5);
+
+$shadow-sm: 0 5px 20px rgba(0, 0, 0, 0.5);
+$shadow-md: 0 10px 20px rgba(106, 17, 203, 0.4);
+$shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.7);
+
+$auth-card-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+$auth-button-shadow-hover: 0 10px 20px rgba(106, 17, 203, 0.4);
+$auth-input-focus-shadow: 0 0 0 3px rgba(106, 17, 203, 0.3);
+
+$card-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+$card-shadow-hover: 0 12px 35px rgba(106, 17, 203, 0.4);
+$avatar-frame-shadow: 0 0 15px rgba(106, 17, 203, 0.6);
+$btn-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+$btn-shadow-hover: 0 8px 20px rgba(106, 17, 203, 0.6);
+
+// Transitions
+$transition-quick: all 0.2s;
+$transition-ease: all 0.3s ease;
+$transition-opacity: opacity 0.3s ease;
+$transition-scale: transform 0.3s ease;
+
+$auth-transition-ease: all 0.3s ease;
+
+// Sizes
+$auth-card-padding: 40px;
+$auth-input-padding: 14px 10px 10px 10px; 
+$auth-button-padding: 15px 50px;

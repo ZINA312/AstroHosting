@@ -1,0 +1,143 @@
+@use '../../../../assets/variables' as var;
+@use '../../../../assets/mixins' as mixins;
+
+.add-custom-equipment-container {
+  background: var.$input-bg;
+  border: 1px solid var.$border-color;
+  border-radius: var.$border-radius-md;
+  padding: var.$spacing-xl;
+  margin-top: var.$spacing-lg;
+
+  h3 {
+    color: var.$text-color;
+    margin-bottom: var.$spacing-lg;
+    text-align: center;
+    font-size: var.$font-size-xl;
+  }
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var.$spacing-md;
+
+  label {
+    color: var.$text-color;
+    font-size: var.$font-size-base;
+    margin-bottom: var.$spacing-sm;
+    font-weight: 500;
+  }
+}
+
+.form-input {
+  width: 95%; 
+  padding: var.$spacing-md var.$spacing-lg;
+  border-radius: var.$border-radius-md;
+  border: 1px solid var.$border-color;
+  background: var.$input-bg;
+  color: var.$text-color;
+  font-size: var.$font-size-base;
+  transition: var.$transition-ease;
+
+  @include mixins.input-focus-effect();
+}
+
+.specifications-input-group {
+  display: flex;
+  gap: var.$spacing-sm;
+  align-items: center;
+  margin-bottom: var.$spacing-sm;
+}
+
+.add-spec-button {
+  background: #2575fc; 
+  color: white;
+  border: none;
+  padding: var.$spacing-sm var.$spacing-md;
+  border-radius: var.$border-radius-sm;
+  cursor: pointer;
+  transition: var.$transition-ease;
+  font-size: var.$font-size-sm;
+
+  &:hover {
+    background: #1c5bc0; 
+  }
+}
+
+.current-specs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var.$spacing-sm;
+  margin-top: var.$spacing-sm;
+
+  .selected-equipment-card {
+    background: var.$selected-equipment-bg;
+    border-color: var.$selected-equipment-border;
+  }
+}
+
+.custom-equipment-actions {
+  display: flex;
+  gap: var.$spacing-md;
+  margin-top: var.$spacing-xl;
+  justify-content: flex-end;
+}
+
+.submit-button {
+  width: auto;
+  padding: var.$spacing-md var.$spacing-xl;
+  font-size: var.$font-size-base;
+  margin-top: 0; 
+  background: var.$gradient-purple-blue;
+  color: white;
+  border: none;
+  border-radius: var.$border-radius-md;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var.$transition-ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: var.$shadow-md;
+  }
+
+  &:disabled {
+    background: linear-gradient(45deg, #4a0d9a, #1c5bc0);
+    cursor: not-allowed;
+  }
+}
+
+.cancel-button {
+  background: var.$error-bg;
+  color: var.$error-text;
+  border: 1px solid rgba(217, 48, 37, 0.4);
+  padding: var.$spacing-md var.$spacing-xl;
+  border-radius: var.$border-radius-md;
+  font-size: var.$font-size-base;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var.$transition-ease;
+
+  &:hover {
+    background: rgba(217, 48, 37, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+.button-spinner {
+  @include mixins.spinner($size: 24px, $border-width: 3px, $color: rgba(255, 255, 255, 0.3), $top-color: white);
+  margin: 0 auto;
+}
+
+.form-error {
+  background: var.$error-bg;
+  color: var.$error-text;
+  padding: var.$spacing-md;
+  border-radius: var.$border-radius-sm;
+  margin-bottom: var.$spacing-lg;
+  border: 1px solid rgba(217, 48, 37, 0.4);
+  text-align: center;
+}
