@@ -8,6 +8,18 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "myAllowSpecificOrigins",
+                      builder =>
+                      {
+                          builder.WithOrigins("https://localhost:3000") 
+                                 .AllowAnyHeader()
+                                 .AllowAnyMethod()
+                                 .AllowCredentials(); 
+                      });
+});
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -88,6 +100,8 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
+
+app.UseCors("myAllowSpecificOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
