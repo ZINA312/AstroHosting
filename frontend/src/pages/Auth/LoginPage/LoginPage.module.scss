@@ -10,7 +10,7 @@
   color: $gradient-start;
   text-decoration: none;
   font-weight: 600;
-  transition: $auth-transition-ease;
+  transition: $transition-ease;
 
   &:hover {
     color: $auth-link-hover;

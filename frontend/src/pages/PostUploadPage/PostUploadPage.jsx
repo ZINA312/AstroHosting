@@ -7,11 +7,16 @@ import EquipmentSelector from './components/EquipmentSelector/EquipmentSelector'
 import AddCustomEquipment from './components/AddCustomEquipment/AddCustomEquipment';
 import styles from './PostUploadPage.module.scss';
 
+
+import { postApi } from '../../api/postApi';
+import { equipmentApi } from '../../api/equipmentApi';
+
+
 export const EquipmentTypes = {
     Camera: 0,
     Lens: 1,
     ComaCorrector: 2,
-    Flatner: 3,
+    Flattener: 3, 
     Mount: 4,
     Tripod: 5,
     Focuser: 6,
@@ -23,51 +28,57 @@ export const EquipmentTypes = {
 };
 
 export const getEquipmentTypeName = (typeValue) => {
+    
     return Object.keys(EquipmentTypes).find(key => EquipmentTypes[key] === typeValue) || 'Unknown';
 };
+
+export const getEquipmentTypeValue = (typeName) => {
+    
+    return EquipmentTypes[typeName];
+};
+
 
 const CreatePostPage = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
-        description: '',
-        imageUrl: '',
-        equipmentIds: []
+        description: '', 
+        equipmentIds: [] 
     });
     const [availableEquipment, setAvailableEquipment] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [uploading, setUploading] = useState(false);
-    const [addingEquipment, setAddingEquipment] = useState(false);
+    const [loading, setLoading] = useState(true); 
+    const [uploading, setUploading] = useState(false); 
+    const [addingEquipment, setAddingEquipment] = useState(false); 
     const [error, setError] = useState('');
-    const [previewUrl, setPreviewUrl] = useState('');
+    const [previewUrl, setPreviewUrl] = useState(''); 
+    const [selectedImageFile, setSelectedImageFile] = useState(null); 
+
     const [showEquipmentSearch, setShowEquipmentSearch] = useState(false);
     const [showAddCustomEquipment, setShowAddCustomEquipment] = useState(false);
 
+    
     useEffect(() => {
         const fetchEquipment = async () => {
             try {
-                await new Promise(resolve => setTimeout(resolve, 500));
-                const mockEquipment = [
-                    { id: 'e1f2g3h4-i5j6-k7l8-m9n0-o1p2q3r4s5t6', name: 'Celestron NexStar 8SE', manufacturer: 'Celestron', type: getEquipmentTypeName(EquipmentTypes.Telescope) },
-                    { id: 'f2g3h4i5-j6k7-l8m9-n0o1-p2q3r4s5t6u7', name: 'ZWO ASI294MC Pro', manufacturer: 'ZWO', type: getEquipmentTypeName(EquipmentTypes.Camera) },
-                    { id: 'g3h4i5j6-k7l8-m9n0-o1p2-q3r4s5t6u7v8', name: 'Sky-Watcher EQ6-R Pro', manufacturer: 'Sky-Watcher', type: getEquipmentTypeName(EquipmentTypes.Mount) },
-                    { id: 'h4i5j6k7-l8m9-n0o1-p2q3-r4s5t6u7v8w9', name: 'Optolong L-Pro Filter', manufacturer: 'Optolong', type: getEquipmentTypeName(EquipmentTypes.Filter) },
-                    { id: 'i5j6k7l8-m9n0-o1p2-q3r4-s5t6u7v8w9x0', name: 'William Optics RedCat 51', manufacturer: 'William Optics', type: getEquipmentTypeName(EquipmentTypes.Lens) },
-                    { id: 'j6k7l8m9-n0o1-p2q3-r4s5-t6u7v8w9x0y1', name: 'Nikon D850', manufacturer: 'Nikon', type: getEquipmentTypeName(EquipmentTypes.Camera) },
-                    { id: 'k7l8m9n0-o1p2-q3r4-s5t6-u7v8w9x0y1z2', name: 'Astro-Tech AT72ED', manufacturer: 'Astro-Tech', type: getEquipmentTypeName(EquipmentTypes.Telescope) },
-                    { id: 'l8m9n0o1-p2q3-r4s5-t6u7-v8w9x0y1z2a3', name: 'iOptron CEM40', manufacturer: 'iOptron', type: getEquipmentTypeName(EquipmentTypes.Mount) },
-                    { id: 'm9n0o1p2-q3r4-s5t6-u7v8-w9x0y1z2a3b4', name: 'Baader Moon & Skyglow Filter', manufacturer: 'Baader', type: getEquipmentTypeName(EquipmentTypes.Filter) },
-                ];
-                setAvailableEquipment(mockEquipment);
-                setLoading(false);
+                setLoading(true);
+                setError('');
+                const fetchedEquipment = await equipmentApi.getAllEquipment();
+                
+                const mappedEquipment = fetchedEquipment.map(eq => ({
+                    ...eq,
+                    type: getEquipmentTypeName(eq.type) 
+                }));
+                setAvailableEquipment(mappedEquipment);
             } catch (err) {
-                setError('Failed to load equipment list');
+                console.error('Error loading equipment:', err);
+                setError(err.message || 'Failed to load equipment list.');
+            } finally {
                 setLoading(false);
             }
         };
 
         fetchEquipment();
-    }, []);
+    }, []); 
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;
@@ -77,12 +88,17 @@ const CreatePostPage = () => {
         }));
     };
 
-    const handleImageChange = (url) => {
-        setPreviewUrl(url);
-        setFormData(prev => ({
-            ...prev,
-            imageUrl: '' 
-        }));
+    
+    const handleImageChange = (file, url) => {
+        setSelectedImageFile(file); 
+        setPreviewUrl(url); 
+        setError(''); 
+    };
+
+    const handleRemoveImage = () => {
+        setSelectedImageFile(null);
+        setPreviewUrl('');
+        setError(''); 
     };
 
     const handleEquipmentSelectionChange = (equipmentId) => {
@@ -91,9 +107,9 @@ const CreatePostPage = () => {
             const index = equipmentIds.indexOf(equipmentId);
 
             if (index > -1) {
-                equipmentIds.splice(index, 1);
+                equipmentIds.splice(index, 1); 
             } else {
-                equipmentIds.push(equipmentId);
+                equipmentIds.push(equipmentId); 
             }
             return {
                 ...prev,
@@ -102,62 +118,81 @@ const CreatePostPage = () => {
         });
     };
 
+    
     const handleAddCustomEquipment = async (newEquipmentData) => {
         setAddingEquipment(true);
+        setError('');
         try {
-            const response = await new Promise(resolve => setTimeout(() => {
-                const newId = `custom-${Date.now()}`;
-                const createdEquipment = {
-                    id: newId,
-                    name: newEquipmentData.name,
-                    manufacturer: newEquipmentData.manufacturer,
-                    type: getEquipmentTypeName(newEquipmentData.type),
-                    specifications: newEquipmentData.specifications
-                };
-                resolve(createdEquipment);
-            }, 1000));
+            
+            const equipmentDataToSend = {
+                name: newEquipmentData.name,
+                manufacturer: newEquipmentData.manufacturer,
+                type: getEquipmentTypeValue(newEquipmentData.type), 
+                specifications: newEquipmentData.specifications
+            };
+            const createdEquipment = await equipmentApi.createEquipment(equipmentDataToSend);
+            
+            
+            const mappedCreatedEquipment = {
+                ...createdEquipment,
+                type: getEquipmentTypeName(createdEquipment.type)
+            };
 
-            setAvailableEquipment(prev => [...prev, response]);
+            setAvailableEquipment(prev => [...prev, mappedCreatedEquipment]);
             setFormData(prev => ({
                 ...prev,
-                equipmentIds: [...prev.equipmentIds, response.id]
+                equipmentIds: [...prev.equipmentIds, mappedCreatedEquipment.id]
             }));
-            setShowAddCustomEquipment(false);
-            setError('');
+            setShowAddCustomEquipment(false); 
         } catch (err) {
+            console.error('Error adding custom equipment:', err);
             setError(err.message || 'Failed to add custom equipment.');
         } finally {
             setAddingEquipment(false);
         }
     };
 
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         setUploading(true);
         setError('');
 
         if (!formData.title.trim()) {
-            setError('Title is required');
+            setError('Title is required.');
             setUploading(false);
             return;
         }
 
-        if (!formData.imageUrl && !previewUrl) {
-            setError('Image is required');
+        if (!formData.description.trim()) {
+            setError('Description is required.');
+            setUploading(false);
+            return;
+        }
+
+        if (!selectedImageFile) { 
+            setError('Image is required.');
             setUploading(false);
             return;
         }
 
         try {
-            console.log('Final post data to upload:', {
-                ...formData,
-                image: previewUrl ? 'uploaded-image-data' : formData.imageUrl, 
-            });
+            
+            const postCreateData = {
+                title: formData.title,
+                content: formData.description, 
+                imageFile: selectedImageFile, 
+                
+                equipmentIds: formData.equipmentIds 
+            };
+              
+            const createdPost = await postApi.createPost(postCreateData);
+            console.log('Post successfully created:', createdPost);
 
-            await new Promise(resolve => setTimeout(resolve, 1500)); 
-            navigate('/');
+            navigate(`/post/${createdPost.id}`); 
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to publish photo');
+            console.error('Error publishing post:', err);
+            setError(err.message || 'Failed to publish photo. Please try again.');
         } finally {
             setUploading(false);
         }
@@ -167,6 +202,7 @@ const CreatePostPage = () => {
         return (
             <div className={styles['create-post-loading']}>
                 <div className={styles.spinner}></div>
+                <p>Loading available equipment...</p>
             </div>
         );
     }
@@ -197,6 +233,7 @@ const CreatePostPage = () => {
                             className={styles['form-error']}
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
+                            transition={{ duration: 0.3 }}
                         >
                             {error}
                         </motion.div>
@@ -204,15 +241,15 @@ const CreatePostPage = () => {
 
                     <form onSubmit={handleSubmit} className={styles['post-form']}>
                         <ImageUploader
-                            previewUrl={previewUrl || formData.imageUrl}
+                            previewUrl={previewUrl}
                             onImageChange={handleImageChange}
-                            onRemoveImage={() => setPreviewUrl('')} 
+                            onRemoveImage={handleRemoveImage} 
                             setError={setError}
                         />
 
                         <PostForm
                             title={formData.title}
-                            description={formData.description}
+                            description={formData.description} 
                             handleChange={handleFormChange}
                         />
 

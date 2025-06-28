@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthLayout from '../components/AuthLayout/AuthLayout';
-import AuthCard from '../components/AuthCard/AuthCard';
-import AuthInput from '../components/AuthInput/AuthInput';
-import AuthButton from '../components/AuthButton/AuthButton';
+import AuthLayout from '../components/AuthLayout/AuthLayout'; 
+import AuthCard from '../components/AuthCard/AuthCard';     
+import AuthInput from '../components/AuthInput/AuthInput';  
+import AuthButton from '../components/AuthButton/AuthButton'; 
 import styles from './LoginPage.module.scss';
+import { useAuth } from '../../../context/AuthContext'; 
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     login: '',
     password: ''
   });
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [localError, setLocalError] = useState(''); 
+  const { login, loading: authLoading, authError } = useAuth(); 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,15 +26,19 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError('');
+    setLocalError(''); 
 
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate('/');
-    }, 1500);
+    if (!formData.login || !formData.password) {
+      setLocalError('Please enter both login and password.');
+      return;
+    }
 
-    // add login 
+    try {
+      await login({ login: formData.login, password: formData.password });
+      navigate('/'); 
+    } catch (err) {
+      console.error("Login submission failed:", err);
+    }
   };
 
   const footerLinks = (
@@ -48,7 +53,7 @@ const LoginPage = () => {
       <AuthCard
         title="Login to AstroHosting"
         subtitle="Capture the cosmos, share your vision"
-        error={error}
+        error={localError || authError} 
         footerLinks={footerLinks}
       >
         <form onSubmit={handleSubmit} className={styles['auth-form']}>
@@ -61,6 +66,7 @@ const LoginPage = () => {
             required
             placeholder="Enter your login"
             delay={0.2}
+            disabled={authLoading}
           />
           <AuthInput
             label="Password"
@@ -72,8 +78,9 @@ const LoginPage = () => {
             required
             placeholder="Enter your password"
             delay={0.3}
+            disabled={authLoading}
           />
-          <AuthButton isLoading={isLoading}>
+          <AuthButton isLoading={authLoading}> 
             Login
           </AuthButton>
         </form>

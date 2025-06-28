@@ -6,6 +6,7 @@ $placeholder-color: #8a8a8a;
 $focus-color: rgba(41, 86, 182, 0.781);
 $hover-color: #4568db;
 $transition-time: 0.3s;
+$error-color: #e74c3c;
 
 nav {
   background-color: $nav-bg;
@@ -101,6 +102,29 @@ nav {
     &:hover {
       background-color: rgba(0, 0, 0, 0.1);
       transform: scale(1.1);
+    }
+  }
+
+  .logoutButton {
+    background-color: $error-color; 
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px; 
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color $transition-time ease, transform $transition-time ease, box-shadow $transition-time ease;
+    
+    &:hover {
+        background-color: darken($error-color, 10%); 
+        color: #fff; 
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    &::after {
+      display: none; 
     }
   }
 }

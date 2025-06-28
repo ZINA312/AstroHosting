@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useAuthMock } from '../../context/AuthContext';
-import styles from './NavigationStyle.module.scss';
+import { useAuth } from '../../context/AuthContext'; 
+import styles from './NavigationStyle.module.scss'; 
 
 const UserNavigationComponent = () => {
-  const { isAuthenticated, toggleAuth } = useAuthMock();
+  const { user, isAuthenticated, logout } = useAuth(); 
   
   return (
     <ul className={styles.userNavigation}>
@@ -15,9 +15,17 @@ const UserNavigationComponent = () => {
             </Link>
           </li>
           <li className={styles.userNavItem}>
-            <Link to="/user/1" className={styles.userNavLink}>
-              <span className={styles.userName}>Profile</span>
+            <Link to={`/user/${user?.id}`} className={styles.userNavLink}>
+              <span className={styles.userName}>{user?.username || 'Profile'}</span>
             </Link>
+          </li>
+          <li className={styles.userNavItem}>
+            <button 
+              className={`${styles.userNavLink} ${styles.logoutButton}`} 
+              onClick={logout}
+            >
+              Logout
+            </button>
           </li>
         </>
       ) : (
@@ -34,15 +42,6 @@ const UserNavigationComponent = () => {
           </li>
         </>
       )}
-      
-      <li className={styles.userNavItem}>
-        <button 
-          className={`${styles.authToggle} auth-toggle`}
-          onClick={toggleAuth}
-        >
-          {isAuthenticated ? 'Logout' : 'Login'}
-        </button>
-      </li>
     </ul>
   );
 };

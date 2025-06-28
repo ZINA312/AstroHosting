@@ -1,16 +1,25 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom'; 
 import styles from './PostCard.module.scss'; 
+import { IMAGE_BASE_URL } from '../../../../config/apiConfig';
 
 const PostCard = ({ post, isFeatured = false, isHovered, onHoverStart, onHoverEnd }) => {
+  const navigate = useNavigate(); 
+
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const handleCardClick = () => {
+    navigate(`/post/${post.id}`); 
   };
 
   const wrapperProps = isFeatured ? {
     className: styles['slide-background'],
     onMouseEnter: onHoverStart,
     onMouseLeave: onHoverEnd,
+    onClick: handleCardClick, 
   } : {
     className: styles['photo-card'],
     whileHover: { scale: 1.05 },
@@ -19,17 +28,21 @@ const PostCard = ({ post, isFeatured = false, isHovered, onHoverStart, onHoverEn
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     transition: { duration: 0.5 },
+    onClick: handleCardClick, 
   };
 
+  const imageUrl = post.imageUrl ? `${IMAGE_BASE_URL}${post.imageUrl}` : ''; 
+  const avatarUrl = post.author.avatarUrl ? `${IMAGE_BASE_URL}${post.author.avatarUrl}` : ''; 
+  
   const imageStyle = {
-    backgroundImage: `url(${post.imageUrl})`
+    backgroundImage: `url(${imageUrl})`
   };
 
   return (
     <motion.div {...wrapperProps} style={!isFeatured ? imageStyle : {}}>
       {isFeatured && <div className={styles['slide-background']} style={imageStyle}></div>}
 
-      {(isHovered || isFeatured) && ( 
+      {isHovered && ( 
         <motion.div
           className={`${isFeatured ? styles['slide-overlay'] : styles['photo-overlay']}`}
           initial={{ opacity: 0 }}
@@ -42,7 +55,7 @@ const PostCard = ({ post, isFeatured = false, isHovered, onHoverStart, onHoverEn
             <div className={styles['post-meta']}>
               <div className={styles['author-info']}>
                 <img
-                  src={post.author.avatarUrl}
+                  src={avatarUrl} 
                   alt={post.author.username}
                   className={styles['author-avatar']}
                 />

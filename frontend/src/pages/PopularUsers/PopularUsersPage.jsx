@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import styles from './PopularUsersPage.module.scss'; 
+import { useNavigate } from 'react-router-dom';
+import styles from './PopularUsersPage.module.scss';
+import { userApi } from '../../api/userApi';
+import { IMAGE_BASE_URL } from '../../config/apiConfig';
 
 const PopularUsersPage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -13,75 +17,34 @@ const PopularUsersPage = () => {
         setLoading(true);
         setError(null);
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        const fetchedUsers = await userApi.getPopularUsers(10); 
+        
+        setUsers(fetchedUsers);
 
-        const dummyUsers = [
-          {
-            id: "user-1",
-            username: "AstroNomad",
-            avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg"
-          },
-          {
-            id: "user-2",
-            username: "CosmicLens",
-            avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg"
-          },
-          {
-            id: "user-3",
-            username: "StarGazerPro",
-            avatarUrl: "https://randomuser.me/api/portraits/men/88.jpg"
-          },
-          {
-            id: "user-4",
-            username: "GalacticGirl",
-            avatarUrl: "https://randomuser.me/api/portraits/women/41.jpg"
-          },
-          {
-            id: "user-5",
-            username: "NebulaNerd",
-            avatarUrl: "https://randomuser.me/api/portraits/men/29.jpg"
-          },
-          {
-            id: "user-6",
-            username: "BlackHoleBabe",
-            avatarUrl: "https://randomuser.me/api/portraits/women/55.jpg"
-          },
-          {
-            id: "user-7",
-            username: "PlanetPathfinder",
-            avatarUrl: "https://randomuser.me/api/portraits/men/12.jpg"
-          },
-          {
-            id: "user-8",
-            username: "CometChaser",
-            avatarUrl: "https://randomuser.me/api/portraits/women/77.jpg"
-          },
-          {
-            id: "user-9",
-            username: "LunarExplorer",
-            avatarUrl: "https://randomuser.me/api/portraits/men/3.jpg"
-          },
-          {
-            id: "user-10",
-            username: "MarsMission",
-            avatarUrl: "https://randomuser.me/api/portraits/women/90.jpg"
-          },
-        ];
-        setUsers(dummyUsers);
       } catch (err) {
-        setError("Failed to fetch users. Please try again later.");
         console.error("Error fetching users:", err);
+        setError(err.message || "Failed to load popular photographers. Please try again later.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchUsers();
-  }, []);
+  }, []); 
+
+  const handleUserClick = (userId) => {
+    navigate(`/user/${userId}`); 
+  };
+
+  const handleAvatarError = (e) => {
+    e.target.onerror = null;
+    e.target.src = '/default-avatar.jpg';
+  };
 
   if (loading) {
     return (
       <div className={`${styles['popular-users-page']} ${styles['loading-state']}`}>
+        <div className={styles.spinner}></div> 
         <p>Loading popular photographers...</p>
       </div>
     );
@@ -90,42 +53,51 @@ const PopularUsersPage = () => {
   if (error) {
     return (
       <div className={`${styles['popular-users-page']} ${styles['error-state']}`}>
-        <p>{error}</p>
+        <p className={styles['error-message']}>{error}</p>
+        <button onClick={() => window.location.reload()} className={styles['retry-button']}>Retry</button>
       </div>
     );
   }
 
   return (
-    <div className={styles['popular-users-page']}>
+    <motion.div
+      className={styles['popular-users-page']}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <h1 className={styles['page-title']}>Popular Photographers</h1>
-      <div className={styles['users-grid']}>
-        {users.map(user => (
-          <motion.div
-            key={user.id}
-            className={styles['user-card']}
-            whileHover={{ scale: 1.05 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className={styles['user-avatar-container']}>
-              <div className={styles['user-avatar-frame']}></div>
-              <img
-                src={user.avatarUrl}
-                alt={user.username}
-                className={styles['user-avatar']}
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/default-avatar.jpg'; 
-                }}
-              />
-            </div>
-            <h2 className={styles['user-username']}>{user.username}</h2>
-            <button className={styles['view-profile-btn']}>View Profile</button>
-          </motion.div>
-        ))}
-      </div>
-    </div>
+      {users.length > 0 ? (
+        <div className={styles['users-grid']}>
+          {users.map(user => (
+            <motion.div
+              key={user.id}
+              className={styles['user-card']}
+              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => handleUserClick(user.id)} 
+            >
+              <div className={styles['user-avatar-container']}>
+                <div className={styles['user-avatar-frame']}></div>
+                <img
+                  src={user.avatarUrl ? `${IMAGE_BASE_URL}${user.avatarUrl}` : '/default-avatar.jpg'} 
+                  alt={user.username}
+                  className={styles['user-avatar']}
+                  onError={handleAvatarError}
+                />
+              </div>
+              <h2 className={styles['user-username']}>{user.username}</h2>
+            </motion.div>
+          ))}
+        </div>
+      ) : (
+        <div className={styles['no-users-found']}>
+            <p>No popular photographers found. Check back later!</p>
+        </div>
+      )}
+    </motion.div>
   );
 };
 
