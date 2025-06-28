@@ -30,13 +30,13 @@ namespace AstroHosting.API.Controllers
         {
             try
             {
-                var subscriberId = GetCurrentUserId(); 
+                var subscriberId = GetCurrentUserId();
                 _logger.LogInformation("Attempting to create subscription: Subscriber {SubscriberId} to Target {TargetUserId}",
                     subscriberId,
                     createVm.TargetUserId);
 
                 var createDto = _mapper.Map<SubscriptionCreateDto>(createVm);
-                createDto.SubscriberId = subscriberId; 
+                createDto.SubscriberId = subscriberId;
 
                 var createdSubscriptionDto = await _subscriptionService.CreateSubscriptionAsync(createDto);
                 var resultVm = _mapper.Map<SubscriptionVm>(createdSubscriptionDto);
@@ -66,13 +66,13 @@ namespace AstroHosting.API.Controllers
             }
         }
 
-        [HttpDelete("target/{targetUserId}")] 
+        [HttpDelete("target/{targetUserId}")]
         [Authorize]
-        public async Task<IActionResult> DeleteSubscription(Guid targetUserId) 
+        public async Task<IActionResult> DeleteSubscription(Guid targetUserId)
         {
             try
             {
-                var subscriberId = GetCurrentUserId(); 
+                var subscriberId = GetCurrentUserId();
                 _logger.LogInformation("Attempting to delete subscription by Subscriber {SubscriberId} for Target {TargetUserId}",
                     subscriberId,
                     targetUserId);
@@ -102,7 +102,7 @@ namespace AstroHosting.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An internal server error occurred while deleting subscription by Subscriber and Target IDs." +
-                    " Subscriber: {SubscriberId}, Target: {TargetUserId}", 
+                    " Subscriber: {SubscriberId}, Target: {TargetUserId}",
                     GetCurrentUserIdOrDefault(),
                     targetUserId);
                 return StatusCode(500, new { error = "An internal server error occurred." });
@@ -133,7 +133,7 @@ namespace AstroHosting.API.Controllers
             }
         }
 
-        [HttpGet("my-following")] 
+        [HttpGet("my-following")]
         [Authorize]
         public async Task<IActionResult> GetMyFollowing()
         {
@@ -148,7 +148,7 @@ namespace AstroHosting.API.Controllers
                     subscriberId);
                 return Ok(subscriptionVms);
             }
-            catch (NotFoundException ex) 
+            catch (NotFoundException ex)
             {
                 _logger.LogWarning(ex, "User not found when retrieving following list: {Message}", ex.Message);
                 return NotFound(new { error = ex.Message });
@@ -165,8 +165,35 @@ namespace AstroHosting.API.Controllers
             }
         }
 
-        [HttpGet("followers/{targetUserId}")] 
+        [HttpGet("following/{userId}")]
         [AllowAnonymous] 
+        public async Task<IActionResult> GetFollowingForUser(Guid userId)
+        {
+            try
+            {
+                _logger.LogInformation("Retrieving 'following' list for user: {UserId}", userId);
+                var subscriptionDtos = await _subscriptionService.GetSubscriptionsMadeByUserAsync(userId);
+                var subscriptionVms = _mapper.Map<IEnumerable<SubscriptionVm>>(subscriptionDtos);
+                _logger.LogInformation("Successfully retrieved {Count} subscriptions made by user {UserId}.",
+                    subscriptionVms.Count(),
+                    userId);
+                return Ok(subscriptionVms);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogWarning(ex, "User not found when retrieving following list: {Message}", ex.Message);
+                return NotFound(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An internal server error occurred while retrieving 'following' list for user {UserId}.", userId);
+                return StatusCode(500, new { error = "An internal server error occurred." });
+            }
+        }
+
+
+        [HttpGet("followers/{targetUserId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetFollowersForUser(Guid targetUserId)
         {
             try
@@ -191,15 +218,15 @@ namespace AstroHosting.API.Controllers
             }
         }
 
-        [HttpGet("is-subscribed/{targetUserId}")] 
+        [HttpGet("is-subscribed/{targetUserId}")]
         [Authorize]
         public async Task<IActionResult> IsSubscribed(Guid targetUserId)
         {
             try
             {
                 var subscriberId = GetCurrentUserId();
-                _logger.LogInformation("Checking if User {SubscriberId} is subscribed to User {TargetUserId}", 
-                    subscriberId, 
+                _logger.LogInformation("Checking if User {SubscriberId} is subscribed to User {TargetUserId}",
+                    subscriberId,
                     targetUserId);
                 var isSubscribed = await _subscriptionService.IsSubscribedAsync(subscriberId, targetUserId);
                 return Ok(new { isSubscribed });
