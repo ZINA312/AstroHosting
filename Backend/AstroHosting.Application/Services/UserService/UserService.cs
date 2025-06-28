@@ -21,7 +21,7 @@ namespace AstroHosting.Application.Services
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtProvider _jwtProvider;
         private readonly IOptions<JwtOptions> _jwtOptions;
-        private readonly IFileService _fileService; 
+        private readonly IFileService _fileService;
 
         public UserService(IMapper mapper, ILogger<UserService> logger, IUserRepository userRepository,
             IJwtProvider jwtProvider, IPasswordHasher passwordHasher, IOptions<JwtOptions> jwtOptions,
@@ -33,7 +33,7 @@ namespace AstroHosting.Application.Services
             _jwtProvider = jwtProvider;
             _passwordHasher = passwordHasher;
             _jwtOptions = jwtOptions;
-            _fileService = fileService; 
+            _fileService = fileService;
         }
 
         public async Task<UserTokensDto> LoginAsync(UserAuthDto userAuthDto)
@@ -153,7 +153,7 @@ namespace AstroHosting.Application.Services
             }
             else
             {
-                if (userRegisterDto.Password.Length < 8) 
+                if (userRegisterDto.Password.Length < 8)
                 {
                     errors.Add(nameof(userRegisterDto.Password), ["Password must be at least 8 characters long."]);
                 }
@@ -169,7 +169,7 @@ namespace AstroHosting.Application.Services
                 {
                     errors.Add(nameof(userRegisterDto.Password), ["Password must contain at least one digit."]);
                 }
-                if (!Regex.IsMatch(userRegisterDto.Password, "[^a-zA-Z0-9]")) 
+                if (!Regex.IsMatch(userRegisterDto.Password, "[^a-zA-Z0-9]"))
                 {
                     errors.Add(nameof(userRegisterDto.Password), ["Password must contain at least one special character."]);
                 }
@@ -252,10 +252,13 @@ namespace AstroHosting.Application.Services
             if (errors.Count != 0)
             {
                 _logger.LogWarning("User profile update failed due to validation errors for User {UserId}. Errors: {Errors}",
-                    updateDto.Id, 
+                    updateDto.Id,
                     string.Join("; ", errors.SelectMany(e => e.Value)));
                 throw new ValidationException("User profile validation failed.", errors);
             }
+
+            _mapper.Map(updateDto, user);
+            user.DateUpdated = DateTime.UtcNow;
 
             if (updateDto.NewAvatarFileStream != null && !string.IsNullOrWhiteSpace(updateDto.NewAvatarFileName))
             {
@@ -265,14 +268,11 @@ namespace AstroHosting.Application.Services
                     _logger.LogInformation("Old avatar file {AvatarUrl} deleted for user {UserId}.", user.AvatarUrl, user.Id);
                 }
 
-                var newAvatarUrl = await _fileService.SaveFileAsync(updateDto.NewAvatarFileStream, 
+                var newAvatarUrl = await _fileService.SaveFileAsync(updateDto.NewAvatarFileStream,
                     updateDto.NewAvatarFileName,
                     "uploads/users");
                 user.AvatarUrl = newAvatarUrl;
             }
-
-            _mapper.Map(updateDto, user);
-            user.DateUpdated = DateTime.UtcNow; 
 
             await _userRepository.UpdateAsync(user);
             _logger.LogInformation("User profile {UserId} successfully updated.", user.Id);
@@ -298,6 +298,22 @@ namespace AstroHosting.Application.Services
 
             await _userRepository.DeleteAsync(user);
             _logger.LogInformation("User account {UserId} permanently deleted.", user.Id);
+        }
+
+        public async Task<IEnumerable<UserProfileDto>> GetAllUsersAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+
+            return _mapper.Map<IEnumerable<UserProfileDto>>(users);
+        }
+
+        public async Task<IEnumerable<UserShortDto>> GetPopularUsersAsync(int count)
+        {
+            _logger.LogInformation("Fetching top {Count} popular users.", count);
+            var users = (await _userRepository.GetAllUsersWithSubscriptionsAsync())
+                                 .OrderByDescending(u => u.SubscriptionsReceived.Count)
+                                 .Take(count); 
+            return _mapper.Map<IEnumerable<UserShortDto>>(users);
         }
     }
 }

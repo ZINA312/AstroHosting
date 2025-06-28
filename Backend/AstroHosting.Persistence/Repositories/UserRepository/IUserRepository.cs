@@ -7,5 +7,6 @@ namespace AstroHosting.Persistence.Repositories.UserRepository
         public Task<User?> GetByLoginAsync(string login);
         Task<User?> GetUserProfileByIdAsync(Guid id);
         Task<User?> GetUserWithAvatarByIdAsync(Guid id);
+        Task<IQueryable<User>> GetAllUsersWithSubscriptionsAsync();
     }
 }

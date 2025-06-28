@@ -10,5 +10,7 @@ namespace AstroHosting.Application.Services
         Task<UserProfileDto> GetUserProfileAsync(Guid userId);
         Task UpdateUserProfileAsync(UserUpdateDto updateDto);
         Task DeleteUserAsync(UserDeleteDto deleteDto);
+        Task<IEnumerable<UserProfileDto>> GetAllUsersAsync();
+        Task<IEnumerable<UserShortDto>> GetPopularUsersAsync(int count);
     }
 }

@@ -27,7 +27,7 @@ namespace AstroHosting.API.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] UserAuthVm authVm) 
+        public async Task<IActionResult> Login([FromBody] UserAuthVm authVm)
         {
             try
             {
@@ -37,13 +37,13 @@ namespace AstroHosting.API.Controllers
                 {
                     HttpOnly = true,
                     Secure = true,
-                    SameSite = SameSiteMode.Strict,
+                    SameSite = SameSiteMode.Strict
                 });
                 Response.Cookies.Append("refresh_token", tokens.RefreshToken, new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = true, 
-                    SameSite = SameSiteMode.Strict,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict
                 });
                 return Ok(new { message = "Login successful" });
             }
@@ -66,7 +66,7 @@ namespace AstroHosting.API.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] UserRegisterVm registerVm) 
+        public async Task<IActionResult> Register([FromBody] UserRegisterVm registerVm)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace AstroHosting.API.Controllers
                 _logger.LogWarning(ex, "Registration failed: {Message}", ex.Message);
                 return Conflict(new { error = ex.Message });
             }
-            catch (ValidationException ex) 
+            catch (ValidationException ex)
             {
                 _logger.LogWarning(ex, "Validation error during registration: {Message}", ex.Message);
                 return BadRequest(new { error = ex.Message, errors = ex.Errors });
@@ -178,6 +178,76 @@ namespace AstroHosting.API.Controllers
             }
         }
 
+        [HttpGet("my-profile")]
+        [Authorize] 
+        public async Task<IActionResult> GetMyProfile()
+        {
+            try
+            {
+                var userId = GetCurrentUserId(); 
+                _logger.LogInformation("Attempting to retrieve current user's profile for ID: {UserId}", userId);
+                var userProfileDto = await _userService.GetUserProfileAsync(userId);
+                var userProfileVm = _mapper.Map<UserProfileVm>(userProfileDto);
+                _logger.LogInformation("Successfully retrieved current user's profile for ID: {UserId}", userId);
+                return Ok(userProfileVm);
+            }
+            catch (UserNotFoundException ex)
+            {
+                _logger.LogWarning(ex, "Failed to retrieve current user's profile (user not found in DB): {Message}", ex.Message);
+                return NotFound(new { error = ex.Message });
+            }
+            catch (InvalidOperationException ex) 
+            {
+                _logger.LogError(ex, "Authentication error during current user profile retrieval: {Message}", ex.Message);
+                return Unauthorized(new { error = "Authentication required or invalid token." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An internal server error occurred while retrieving current user's profile.");
+                return StatusCode(500, new { error = "Internal server error" });
+            }
+        }
+
+
+        [HttpGet("all")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                _logger.LogInformation("Attempting to retrieve all user profiles.");
+                var userProfileDtos = await _userService.GetAllUsersAsync();
+                var userProfileVms = _mapper.Map<IEnumerable<UserProfileVm>>(userProfileDtos);
+                _logger.LogInformation("Successfully retrieved {Count} user profiles.", userProfileVms.Count());
+                return Ok(userProfileVms);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An internal server error occurred while retrieving all users.");
+                return StatusCode(500, new { error = "Internal server error" });
+            }
+        }
+
+        [HttpGet("popular")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPopularUsers([FromQuery] int count = 10)
+        {
+            try
+            {
+                _logger.LogInformation("Attempting to retrieve top {Count} popular user profiles.", count);
+                var userProfileDtos = await _userService.GetPopularUsersAsync(count);
+                var userProfileVms = _mapper.Map<IEnumerable<UserShortVm>>(userProfileDtos);
+                _logger.LogInformation("Successfully retrieved {Count} popular user profiles.", userProfileVms.Count());
+                return Ok(userProfileVms);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An internal server error occurred while retrieving popular users.");
+                return StatusCode(500, new { error = "Internal server error" });
+            }
+        }
+
+
         [HttpPut("my-profile")]
         [Authorize]
         [Consumes("multipart/form-data")]
@@ -185,7 +255,7 @@ namespace AstroHosting.API.Controllers
         {
             try
             {
-                var userId = GetCurrentUserId(); 
+                var userId = GetCurrentUserId();
                 _logger.LogInformation("Attempting to update user profile for ID: {UserId}", userId);
 
                 var updateDto = _mapper.Map<UserUpdateDto>(updateVm);
@@ -199,7 +269,7 @@ namespace AstroHosting.API.Controllers
 
                 await _userService.UpdateUserProfileAsync(updateDto);
                 _logger.LogInformation("User profile {UserId} successfully updated.", userId);
-                return NoContent(); 
+                return NoContent();
             }
             catch (UserNotFoundException ex)
             {
@@ -239,7 +309,7 @@ namespace AstroHosting.API.Controllers
                 Response.Cookies.Delete("access_token");
                 Response.Cookies.Delete("refresh_token");
 
-                return NoContent(); 
+                return NoContent();
             }
             catch (UserNotFoundException ex)
             {

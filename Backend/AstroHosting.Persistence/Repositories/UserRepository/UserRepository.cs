@@ -43,5 +43,12 @@ namespace AstroHosting.Persistence.Repositories.UserRepository
                 .Select(u => new User { Id = u.Id, AvatarUrl = u.AvatarUrl }) 
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<IQueryable<User>> GetAllUsersWithSubscriptionsAsync()
+        {
+            return _entities
+                .AsNoTracking()
+                .Include(u => u.SubscriptionsReceived);
+        }
     }
 }
