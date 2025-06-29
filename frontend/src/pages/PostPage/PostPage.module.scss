@@ -222,6 +222,18 @@
   border: $equipment-card-border;
 }
 
+.equipment-card-link {
+    display: block; 
+    text-decoration: none; 
+    color: inherit;
+    padding: $spacing-md;
+
+    &:focus {
+      outline: none; 
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.5); 
+    }
+  }
+
 .equipment-name {
   font-size: 1.4rem;
   margin-bottom: 10px;

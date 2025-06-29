@@ -50,5 +50,21 @@ namespace AstroHosting.Persistence.Repositories.UserRepository
                 .AsNoTracking()
                 .Include(u => u.SubscriptionsReceived);
         }
+
+        public async Task<IEnumerable<User>> SearchUsersAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return [];
+            }
+
+            var pattern = $"%{searchTerm}%";
+
+            return await _entities
+                .AsNoTracking()
+                .Where(u => EF.Functions.Like(u.Username, pattern) || 
+                            EF.Functions.Like(u.Login, pattern))
+                .ToListAsync();
+        }
     }
 }

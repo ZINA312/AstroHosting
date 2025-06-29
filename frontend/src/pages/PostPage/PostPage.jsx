@@ -54,6 +54,7 @@ const PostPage = () => {
 
         const fetchedPost = await postApi.getPostDetailsById(postId);
         
+        
         const fetchedComments = await commentApi.getCommentsForPost(postId);
         setComments(fetchedComments);
 
@@ -93,11 +94,22 @@ const PostPage = () => {
     try {
         const commentData = {
             postId: postId,
-            text: newComment.trim()
+            content: newComment.trim() 
         };
         const createdComment = await commentApi.createComment(commentData);
         
-        setComments(prevComments => [createdComment, ...prevComments]);
+        
+        
+        const commentWithUserInfo = {
+            ...createdComment,
+            user: {
+                id: currentUserId,
+                username: user?.username || "Anonymous",
+                avatarUrl: user?.avatarUrl || "/default-avatar.jpg"
+            }
+        };
+
+        setComments(prevComments => [commentWithUserInfo, ...prevComments]);
         
         setPostDetails(prev => ({
             ...prev,
@@ -121,6 +133,7 @@ const PostPage = () => {
           return;
       }
 
+      
       if (!window.confirm("Are you sure you want to delete this comment?")) { 
           return;
       }
@@ -140,7 +153,7 @@ const PostPage = () => {
 
   const handleEditComment = (comment) => {
     setEditingCommentId(comment.id);
-    setEditedCommentText(comment.text);
+    setEditedCommentText(comment.content); 
   };
 
   const handleSaveEditedComment = async (commentId) => {
@@ -154,12 +167,12 @@ const PostPage = () => {
     }
 
     try {
-      const updateData = { text: editedCommentText.trim() };
+      const updateData = { content: editedCommentText.trim() }; 
       await commentApi.updateComment(commentId, updateData);
       
       setComments(prevComments => 
         prevComments.map(comment => 
-          comment.id === commentId ? { ...comment, text: editedCommentText.trim() } : comment
+          comment.id === commentId ? { ...comment, content: editedCommentText.trim() } : comment 
         )
       );
       setEditingCommentId(null); 
@@ -337,6 +350,7 @@ const PostPage = () => {
               <div className={styles['equipment-section']}>
                 {equipmentUsed.length > 0 ? (
                   equipmentUsed.map((equipment, index) => (
+                    
                     <motion.div
                       key={equipment.id}
                       className={styles['equipment-card']}
@@ -344,23 +358,25 @@ const PostPage = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <h3 className={styles['equipment-name']}>{equipment.name}</h3>
-                      <div className={styles['equipment-meta']}>
-                        <span className={styles['equipment-type']}>{equipmentTypeMap[equipment.type] || 'Unknown Type'}</span>
-                        <span className={styles['equipment-manufacturer']}>{equipment.manufacturer}</span>
-                      </div>
+                      <Link to={`/equipment/${equipment.id}`} className={styles['equipment-card-link']}>
+                        <h3 className={styles['equipment-name']}>{equipment.name}</h3>
+                        <div className={styles['equipment-meta']}>
+                          <span className={styles['equipment-type']}>{equipmentTypeMap[equipment.type] || 'Unknown Type'}</span>
+                          <span className={styles['equipment-manufacturer']}>{equipment.manufacturer}</span>
+                        </div>
 
-                      <div className={styles.specifications}>
-                        <h4>Specifications:</h4>
-                        <ul>
-                          {Object.entries(equipment.specifications || {}).map(([key, value]) => (
-                            <li key={key}>
-                              <span className={styles['spec-key']}>{key}:</span>
-                              <span className={styles['spec-value']}>{value}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                        <div className={styles.specifications}>
+                          <h4>Specifications:</h4>
+                          <ul>
+                            {Object.entries(equipment.specifications || {}).map(([key, value]) => (
+                              <li key={key}>
+                                <span className={styles['spec-key']}>{key}:</span>
+                                <span className={styles['spec-value']}>{value}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </Link>
                     </motion.div>
                   ))
                 ) : (
@@ -487,7 +503,7 @@ const PostPage = () => {
                                 </div>
                             </div>
                         ) : (
-                            <p className={styles['comment-text']}>{comment.text}</p>
+                            <p className={styles['comment-text']}>{comment.content}</p>
                         )}
                       </motion.div>
                     ))}

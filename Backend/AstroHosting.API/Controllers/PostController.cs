@@ -104,6 +104,28 @@ namespace AstroHosting.API.Controllers
             }
         }
 
+        [HttpGet("equipment/{equipmentId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPostsByEquipmentId(Guid equipmentId)
+        {
+            try
+            {
+                var postDtos = await _postService.GetPostsByEquipmentIdAsync(equipmentId);
+                var postVms = _mapper.Map<IEnumerable<PostVm>>(postDtos);
+                return Ok(postVms);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogWarning(ex, "Failed to retrieve posts by equipment ID: {Message}", ex.Message);
+                return NotFound(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An internal server error occurred while retrieving posts by equipment ID {EquipmentId}.", equipmentId);
+                return StatusCode(500, new { error = "An internal server error occurred." });
+            }
+        }
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetPostDetailsById(Guid id, [FromQuery] bool includeDeleted = false)

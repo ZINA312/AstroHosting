@@ -19,5 +19,7 @@ namespace AstroHosting.Persistence.Repositories.PostRepository
             bool includeDeleted = false,
             Guid? requesterId = null);
         Task<Post?> GetByIdEvenIfDeletedAsync(Guid id);
+        Task<IEnumerable<Post>> SearchPostsAsync(string searchTerm);
+        Task<IEnumerable<Post>> GetPostsByEquipmentIdAsync(Guid equipmentId);
     }
 }

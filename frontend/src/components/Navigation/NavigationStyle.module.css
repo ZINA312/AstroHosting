@@ -84,4 +84,24 @@ nav .auth-toggle {
 nav .auth-toggle:hover {
   background-color: rgba(0, 0, 0, 0.1);
   transform: scale(1.1);
+}
+nav .logoutButton {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+nav .logoutButton:hover {
+  background-color: #d62c1a;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+nav .logoutButton::after {
+  display: none;
 }/*# sourceMappingURL=NavigationStyle.module.css.map */

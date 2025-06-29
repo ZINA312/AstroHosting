@@ -37,6 +37,19 @@ export const postApi = {
         }
     },
 
+    getPostsByEquipmentId: async (equipmentId) => {
+        try {
+            const response = await apiClient.get(`/Post/equipment/${equipmentId}`);
+            return response.data;
+        } catch (error) {
+            console.error(`Error fetching posts by equipment ID ${equipmentId}:`, error.response?.data || error.message);
+            if (error.response?.status === 404) {
+                throw new Error(error.response.data.error || 'Equipment not found or no posts used it.');
+            }
+            throw new Error('Failed to retrieve posts by equipment.');
+        }
+    },
+
     getPopularPosts: async (count = 10) => {
         try {
             const response = await apiClient.get(`/Post/popular?count=${count}`);

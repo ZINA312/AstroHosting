@@ -1,3 +1,5 @@
+@import '../../assets/variables';
+
 $nav-bg: #1a1a2e;
 $border-color: #2d4059;
 $input-bg: #313031;
@@ -54,6 +56,26 @@ nav {
     }
   }
 
+.searchButton {
+  background: transparent; 
+  color: $white-color;
+  border: none;
+  border-radius: $border-radius-round; 
+  cursor: pointer;
+  transition: $transition-ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+
+  p {
+    font-size: 1rem; 
+    color: $white-color; 
+  }
+}
+
   a {
     text-decoration: none;
     color: $text-color;
@@ -80,28 +102,6 @@ nav {
     &:hover::after,
     &.active::after {
       width: 100%;
-    }
-  }
-
-  .auth-toggle {
-    background: none;
-    color: $text-color;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    margin-left: 0.5rem;
-    border-radius: 50%;
-    transition: all $transition-time ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-      transform: scale(1.1);
     }
   }
 

@@ -126,5 +126,34 @@ namespace AstroHosting.Persistence.Repositories.PostRepository
             return await _entities.FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
         }
 
+        public async Task<IEnumerable<Post>> SearchPostsAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return [];
+            }
+
+            var pattern = $"%{searchTerm}%"; 
+
+            return await _entities
+                .AsNoTracking()
+                .Where(p => (EF.Functions.Like(p.Title, pattern) ||          
+                             (p.Description != null && EF.Functions.Like(p.Description, pattern))) && 
+                            !p.IsDeleted) 
+                .Include(p => p.Author)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Post>> GetPostsByEquipmentIdAsync(Guid equipmentId)
+        {
+            return await _entities
+                .AsNoTracking()
+                .Where(p => !p.IsDeleted && p.EquipmentUsed.Any(pe => pe.EquipmentId == equipmentId))
+                .Include(p => p.Author) 
+                .Include(p => p.Likes) 
+                .Include(p => p.Comments) 
+                .OrderByDescending(p => p.DateCreated)
+                .ToListAsync();
+        }
     }
 }

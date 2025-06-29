@@ -12,6 +12,8 @@ import PostPage from './pages/PostPage/PostPage';
 import PostUploadPage from './pages/PostUploadPage/PostUploadPage';
 import RecentPostsPage from './pages/RecentPostsPage/RecentPostsPage';
 import PopularUsersPage from './pages/PopularUsers/PopularUsersPage';
+import SearchResultPage from './pages/SearchResultPage/SearchResultPage'
+import EquipmentPage from './pages/EquipmentPage/EquipmentPage';
 
 function App() {
   return (
@@ -41,6 +43,12 @@ function App() {
           </Route>
           <Route path="/popular-users" element={<MainLayout />}>
             <Route index element={<PopularUsersPage />} />
+          </Route>
+          <Route path="/search" element={<MainLayout />}>
+            <Route index element={<SearchResultPage />} />
+          </Route>
+          <Route path="/equipment/:equipmentId" element={<MainLayout />}>
+            <Route index element={<EquipmentPage />} />
           </Route>
         </Routes>
       </AuthProvider>

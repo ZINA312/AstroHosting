@@ -69,6 +69,17 @@ namespace AstroHosting.Application.Services
             return _mapper.Map<IEnumerable<PostDto>>(posts);
         }
 
+        public async Task<IEnumerable<PostDto>> GetPostsByEquipmentIdAsync(Guid equipmentId)
+        {
+            var equipmentExists = await _equipmentRepository.ExistsAsync(equipmentId);
+            if (!equipmentExists)
+            {
+                _logger.LogWarning("Equipment with ID {EquipmentId} not found when retrieving associated posts.", equipmentId);
+                throw new NotFoundException("Equipment", equipmentId);
+            }
+            var posts = await _postRepository.GetPostsByEquipmentIdAsync(equipmentId);
+            return _mapper.Map<IEnumerable<PostDto>>(posts);
+        }
 
         public async Task<PostDetailsDto> GetPostDetailsByIdAsync(Guid id, bool includeDeleted = false, Guid? requesterId = null)
         {
