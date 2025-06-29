@@ -1,0 +1,119 @@
+.equipment-details-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: rgba(18, 18, 35, 0.95);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+@media (max-width: 768px) {
+  .equipment-details-card {
+    padding: 25px;
+  }
+}
+
+.detail-group {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed rgba(106, 17, 203, 0.2);
+}
+.detail-group:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.detail-group .detail-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e0e0ff;
+  flex-shrink: 0;
+  margin-right: 15px;
+  min-width: 120px;
+}
+@media (max-width: 480px) {
+  .detail-group .detail-label {
+    min-width: 90px;
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+}
+.detail-group .detail-value {
+  font-size: 1rem;
+  color: #f0f0f0;
+  flex-grow: 1;
+}
+.detail-group .detail-value.description {
+  white-space: pre-wrap;
+}
+@media (max-width: 480px) {
+  .detail-group .detail-value {
+    font-size: 0.9rem;
+  }
+}
+
+.specifications-section {
+  margin-top: 40px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(106, 17, 203, 0.3);
+}
+.specifications-section .section-heading {
+  font-size: 1.5rem;
+  color: #6a11cb;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 10px;
+}
+.specifications-section .section-heading::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: #6a11cb;
+  border-radius: 2px;
+}
+@media (max-width: 768px) {
+  .specifications-section .section-heading {
+    font-size: 1.2rem;
+  }
+}
+
+.spec-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .spec-list {
+    grid-template-columns: 1fr;
+  }
+}
+.spec-list .spec-item {
+  background-color: rgba(10, 10, 25, 0.7);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(106, 17, 203, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.spec-list .spec-item .spec-key {
+  font-weight: 500;
+  color: #a0a0c0;
+  margin-right: 10px;
+}
+.spec-list .spec-item .spec-value {
+  color: #f0f0f0;
+  font-weight: 400;
+  text-align: right;
+  flex-grow: 1;
+}/*# sourceMappingURL=EquipmentDetailsCard.module.css.map */

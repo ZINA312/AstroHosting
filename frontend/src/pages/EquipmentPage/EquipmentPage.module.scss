@@ -1,16 +1,15 @@
 @import '../../assets/variables'; 
-@import '../../assets/mixins';   
+@import '../../assets/mixins';   
 
 .equipment-page {
-  max-width: 900px;
-  margin: 40px auto;
+  width: 100%;
+  margin: 0 auto;
   padding: 30px 20px;
   color: $text-color-light;
   min-height: 70vh;
   background-color: $primary-bg-color;
   border-radius: $border-radius-md;
   box-shadow: $shadow-lg; 
-  border: 1px solid rgba($border-color, 0.5);
 
   @media (max-width: 768px) {
     margin: 20px auto;
@@ -31,181 +30,6 @@
   }
 }
 
-.equipment-details-card {
-  background-color: $card-bg; 
-  border-radius: $border-radius-md;
-  padding: $spacing-xl;
-  box-shadow: $card-shadow;
-  border: 1px solid $border-color;
-
-  @media (max-width: 768px) {
-    padding: $spacing-lg;
-  }
-}
-
-.detail-group {
-  display: flex;
-  align-items: baseline; 
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px dashed rgba($border-color, 0.2); 
-
-  &:last-of-type {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-
-  .detail-label {
-    font-size: $font-size-md;
-    font-weight: 600;
-    color: $text-color-heading;
-    flex-shrink: 0; 
-    margin-right: 15px;
-    min-width: 120px; 
-
-    @media (max-width: 480px) {
-      min-width: 90px;
-      font-size: $font-size-base;
-      margin-right: 10px;
-    }
-  }
-
-  .detail-value {
-    font-size: $font-size-base;
-    color: $text-color-light;
-    flex-grow: 1; 
-    
-    &.description {
-      white-space: pre-wrap; 
-    }
-
-    @media (max-width: 480px) {
-      font-size: $font-size-sm;
-    }
-  }
-}
-
-.specifications-section {
-  margin-top: $spacing-xl;
-  padding-top: $spacing-lg;
-  border-top: 1px solid rgba($border-color, 0.3);
-
-  .section-heading {
-    font-size: $font-size-xl;
-    color: $primary-color; 
-    margin-bottom: $spacing-md;
-    text-align: center;
-    position: relative;
-    padding-bottom: 10px;
-
-    &::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 2px;
-      background: $gradient-start;
-      border-radius: 2px;
-    }
-
-    @media (max-width: 768px) {
-      font-size: $font-size-lg;
-    }
-  }
-}
-
-.spec-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: $spacing-md;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-
-  .spec-item {
-    background-color: $auth-input-bg;
-    border-radius: $border-radius-sm;
-    padding: $spacing-sm;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid rgba($border-color, 0.3);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-    .spec-key {
-      font-weight: 500;
-      color: $text-color-muted;
-      margin-right: 10px;
-    }
-
-    .spec-value {
-      color: $text-color-light;
-      font-weight: 400;
-      text-align: right;
-      flex-grow: 1;
-    }
-  }
-}
-
-.related-posts-section {
-  margin-top: $spacing-xxl; 
-  padding-top: $spacing-lg;
-  border-top: 1px solid rgba($border-color, 0.3);
-  text-align: center;
-
-  .section-title {
-    font-size: $font-size-xxl;
-    color: $section-title-color;
-    margin-bottom: $spacing-xl;
-    text-shadow: 0 0 10px rgba($primary-color, 0.3);
-
-    @media (max-width: 768px) {
-      font-size: $font-size-xl;
-      margin-bottom: $spacing-lg;
-    }
-  }
-}
-
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: $spacing-md;
-  justify-content: center; 
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: $spacing-md;
-  }
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-    gap: $spacing-sm;
-  }
-}
-
-.loading-posts-state,
-.error-posts-state,
-.no-posts-found {
-  @include flex-center();
-  flex-direction: column;
-  min-height: 200px;
-  font-size: $font-size-md;
-  color: $text-color-muted;
-  text-align: center;
-  padding: 20px;
-  border: 1px dashed rgba($text-color-muted, 0.2);
-  border-radius: $border-radius-md;
-  background-color: $card-bg-dark;
-  box-shadow: $card-shadow;
-}
-
 .loading-state,
 .error-state,
 .no-details {
@@ -220,6 +44,8 @@
   border-radius: $border-radius-md;
   background-color: $card-bg-dark;
   box-shadow: $card-shadow;
+  margin: $spacing-xl auto;
+  max-width: 600px;
 }
 
 .error-message {

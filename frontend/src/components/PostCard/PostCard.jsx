@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'; 
 import styles from './PostCard.module.scss'; 
-import { IMAGE_BASE_URL } from '../../../../config/apiConfig';
+import { IMAGE_BASE_URL } from '../../config/apiConfig';
 
 const PostCard = ({ post, isFeatured = false, isHovered, onHoverStart, onHoverEnd }) => {
   const navigate = useNavigate(); 

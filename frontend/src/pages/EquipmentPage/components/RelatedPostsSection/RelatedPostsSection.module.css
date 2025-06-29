@@ -1,0 +1,124 @@
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.related-posts-section {
+  margin-top: 60px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(106, 17, 203, 0.3);
+  text-align: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  color: #e0e0ff;
+  margin-bottom: 40px;
+  text-shadow: 0 0 10px rgba(106, 17, 203, 0.3);
+}
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+  }
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  .posts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+}
+@media (max-width: 480px) {
+  .posts-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.loading-posts-state,
+.error-posts-state,
+.no-posts-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 200px;
+  font-size: 1.1rem;
+  color: #a0a0c0;
+  text-align: center;
+  padding: 20px;
+  border: 1px dashed rgba(160, 160, 192, 0.2);
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(106, 17, 203, 0.3);
+  border-top-color: #6a11cb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.retry-button {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: #ffffff;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all all 0.3s ease;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(106, 17, 203, 0.3);
+}
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(106, 17, 203, 0.5);
+}/*# sourceMappingURL=RelatedPostsSection.module.css.map */

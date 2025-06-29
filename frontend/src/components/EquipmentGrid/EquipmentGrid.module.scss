@@ -1,0 +1,42 @@
+@import '../../assets/variables';
+
+.equipment-list {
+  display: grid;
+  grid-template-columns: 30%; 
+  gap: $spacing-md; 
+}
+
+.equipment-item {
+  background-color: $card-bg; 
+  border-radius: $border-radius-md; 
+  padding: $spacing-md; 
+  box-shadow: $card-shadow; 
+  border: 1px solid rgba($border-color, 0.5); 
+  transition: $transition-quick, box-shadow $transition-quick; 
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+  }
+}
+
+.equipment-name {
+  font-size: $font-size-xl;
+  color: $primary-color; 
+  margin-top: auto; 
+}
+
+.equipment-type, .equipment-manufacturer {
+  background: $equipment-tag-bg;
+  margin-right: 10px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.equipment-item .equipment-link {
+    text-decoration: none;
+    color: inherit; 
+    display: block; 
+    
+}

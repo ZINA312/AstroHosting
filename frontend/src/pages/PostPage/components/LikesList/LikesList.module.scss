@@ -1,0 +1,40 @@
+@import '../../../../assets/variables';
+@import '../../../../assets/mixins';
+
+.likes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.like-item {
+  background: $equipment-card-bg;
+  border-radius: $border-radius-md;
+  padding: 15px;
+  transition: $transition-ease;
+
+  &:hover {
+    background: rgba(106, 17, 203, 0.5);
+    transform: translateY(-3px);
+  }
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: $border-radius-round;
+  object-fit: cover;
+  margin-right: 12px;
+  border: $author-avatar-border;
+}
+
+.username {
+  color: $text-color-heading;
+}

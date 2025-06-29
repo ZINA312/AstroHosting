@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import styles from './PopularUsersPage.module.scss';
 import { userApi } from '../../api/userApi';
-import { IMAGE_BASE_URL } from '../../config/apiConfig';
+import UsersGrid from '../../components/UserGrid/UserGrid'; 
 
 const PopularUsersPage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -17,7 +15,11 @@ const PopularUsersPage = () => {
         setLoading(true);
         setError(null);
 
-        const fetchedUsers = await userApi.getPopularUsers(10); 
+        const allUsers = await userApi.getPopularUsers(10); 
+        
+        const sortedUsers = [...allUsers].sort((a, b) => (b.subscribersCount || 0) - (a.subscribersCount || 0));
+
+        const fetchedUsers = sortedUsers.slice(0, 10); 
         
         setUsers(fetchedUsers);
 
@@ -31,15 +33,6 @@ const PopularUsersPage = () => {
 
     fetchUsers();
   }, []); 
-
-  const handleUserClick = (userId) => {
-    navigate(`/user/${userId}`); 
-  };
-
-  const handleAvatarError = (e) => {
-    e.target.onerror = null;
-    e.target.src = '/default-avatar.jpg';
-  };
 
   if (loading) {
     return (
@@ -67,36 +60,7 @@ const PopularUsersPage = () => {
       transition={{ duration: 0.5 }}
     >
       <h1 className={styles['page-title']}>Popular Photographers</h1>
-      {users.length > 0 ? (
-        <div className={styles['users-grid']}>
-          {users.map(user => (
-            <motion.div
-              key={user.id}
-              className={styles['user-card']}
-              whileHover={{ scale: 1.05 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              onClick={() => handleUserClick(user.id)} 
-            >
-              <div className={styles['user-avatar-container']}>
-                <div className={styles['user-avatar-frame']}></div>
-                <img
-                  src={user.avatarUrl ? `${IMAGE_BASE_URL}${user.avatarUrl}` : '/default-avatar.jpg'} 
-                  alt={user.username}
-                  className={styles['user-avatar']}
-                  onError={handleAvatarError}
-                />
-              </div>
-              <h2 className={styles['user-username']}>{user.username}</h2>
-            </motion.div>
-          ))}
-        </div>
-      ) : (
-        <div className={styles['no-users-found']}>
-            <p>No popular photographers found. Check back later!</p>
-        </div>
-      )}
+      <UsersGrid users={users} />
     </motion.div>
   );
 };

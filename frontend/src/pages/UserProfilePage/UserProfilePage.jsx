@@ -5,9 +5,9 @@ import styles from './UserProfilePage.module.scss';
 import { userApi } from '../../api/userApi'; 
 import { postApi } from '../../api/postApi';
 import { subscriptionApi } from '../../api/subscriptionApi'; 
-import { IMAGE_BASE_URL } from '../../config/apiConfig'; 
+import { IMAGE_BASE_URL } from '../../config/apiConfig';
 import { useAuth } from '../../context/AuthContext'; 
-import PostCard from '../HomePage/components/PostCard/PostCard'; 
+import PostsGrid from '../../components/PostGrid/PostGrid'; 
 
 const UserProfilePage = () => {
     const { userId: urlUserId } = useParams();
@@ -34,7 +34,6 @@ const UserProfilePage = () => {
     const [editedProfile, setEditedProfile] = useState({
         username: '',
         bio: '',
-        
     });
     const [selectedAvatarFile, setSelectedAvatarFile] = useState(null);
     const [avatarPreviewUrl, setAvatarPreviewUrl] = useState('');
@@ -42,8 +41,7 @@ const UserProfilePage = () => {
 
     
     useEffect(() => {
-        if (avatarPreviewUrl && !avatarPreviewUrl.startsWith('data:image/') && !avatarPreviewUrl.startsWith(IMAGE_BASE_URL)) {
-             
+        if (avatarPreviewUrl && avatarPreviewUrl.startsWith('blob:')) {
             return () => URL.revokeObjectURL(avatarPreviewUrl);
         }
     }, [avatarPreviewUrl]);
@@ -60,12 +58,18 @@ const UserProfilePage = () => {
                 const profileData = await userApi.getUserProfile(userId);
                 setUserProfile(profileData);
                 
-                setEditedProfile({
-                    username: profileData.username,
-                    bio: profileData.bio || '', 
+                
+                if (isAuthenticated && currentUserId === userId) {
+                    setEditedProfile({
+                        username: profileData.username,
+                        bio: profileData.bio || '', 
+                        
+                    });
+                    setAvatarPreviewUrl(profileData.avatarUrl ? `${IMAGE_BASE_URL}${profileData.avatarUrl}` : '/default-avatar.jpg');
+                } else {
                     
-                });
-                setAvatarPreviewUrl(profileData.avatarUrl ? `${IMAGE_BASE_URL}${profileData.avatarUrl}` : '/default-avatar.jpg');
+                    setAvatarPreviewUrl(profileData.avatarUrl ? `${IMAGE_BASE_URL}${profileData.avatarUrl}` : '/default-avatar.jpg');
+                }
 
 
                 const postsData = await postApi.getPostsByAuthor(userId);
@@ -84,6 +88,7 @@ const UserProfilePage = () => {
                 setUserProfile(null); 
                 setUserPosts([]); 
                 setIsFollowing(false);
+                setAvatarPreviewUrl('/default-avatar.jpg'); 
             } finally {
                 setLoading(false);
             }
@@ -182,7 +187,7 @@ const UserProfilePage = () => {
                 bio: userProfile.bio || '',
             });
             
-            
+            setAvatarPreviewUrl(userProfile.avatarUrl ? `${IMAGE_BASE_URL}${userProfile.avatarUrl}` : '/default-avatar.jpg');
             setSelectedAvatarFile(null); 
         }
     };
@@ -212,7 +217,7 @@ const UserProfilePage = () => {
             }
             setSelectedAvatarFile(file);
             setAvatarPreviewUrl(URL.createObjectURL(file)); 
-            setError('');
+            setError(''); 
         } else {
             setSelectedAvatarFile(null);
             setAvatarPreviewUrl(userProfile.avatarUrl ? `${IMAGE_BASE_URL}${userProfile.avatarUrl}` : '/default-avatar.jpg');
@@ -220,20 +225,15 @@ const UserProfilePage = () => {
     };
 
     const handleRemoveAvatar = () => {
-        setSelectedAvatarFile(null);
+        setSelectedAvatarFile(new File([], "empty.png", { type: "image/png" })); 
         setAvatarPreviewUrl('/default-avatar.jpg'); 
     };
+
 
     const handleSaveProfile = async () => {
         setLoading(true); 
         setError('');
         try {
-            
-            
-            if (!isCurrentUserProfile) { 
-                throw new Error("You can only edit your own profile.");
-            }
-
             
             if (!editedProfile.username.trim()) {
                 setError('Username is required.');
@@ -242,22 +242,25 @@ const UserProfilePage = () => {
             }
 
             
+            if (!isCurrentUserProfile) { 
+                throw new Error("You can only edit your own profile.");
+            }
+
             const updateData = {
                 username: editedProfile.username,
                 bio: editedProfile.bio,
-                
-                
             };
 
             
             if (selectedAvatarFile) {
+                
                 updateData.newAvatarFile = selectedAvatarFile; 
             } else if (avatarPreviewUrl === '/default-avatar.jpg' && userProfile.avatarUrl && userProfile.avatarUrl !== '/default-avatar.jpg') {
                 
                 updateData.removeAvatar = true; 
             }
             
-            
+
             await userApi.updateUserProfile(updateData);
 
             
@@ -267,6 +270,7 @@ const UserProfilePage = () => {
                 username: updatedProfileData.username,
                 bio: updatedProfileData.bio || '',
             });
+            
             setAvatarPreviewUrl(updatedProfileData.avatarUrl ? `${IMAGE_BASE_URL}${updatedProfileData.avatarUrl}` : '/default-avatar.jpg');
             
             setSelectedAvatarFile(null); 
@@ -300,8 +304,8 @@ const UserProfilePage = () => {
             });
             setAvatarPreviewUrl(userProfile.avatarUrl ? `${IMAGE_BASE_URL}${userProfile.avatarUrl}` : '/default-avatar.jpg');
         }
-        setSelectedAvatarFile(null);
-        setError('');
+        setSelectedAvatarFile(null); 
+        setError(''); 
     };
 
     const formatDate = (dateString) => {
@@ -541,7 +545,7 @@ const UserProfilePage = () => {
                                             onClick={handleCloseModal} 
                                             >
                                             <img
-                                                src={userToShow.avatarUrl ? `${IMAGE_BASE_URL}/uploads/${userToShow.avatarUrl}` : '/default-avatar.jpg'} 
+                                                src={userToShow.avatarUrl ? `${IMAGE_BASE_URL}${userToShow.avatarUrl}` : '/default-avatar.jpg'} 
                                                 alt={userToShow.username}
                                                 className={styles['user-avatar']}
                                                 onError={handleAvatarError}
@@ -584,23 +588,7 @@ const UserProfilePage = () => {
 
             <div className={styles['profile-content']}>
                 {activeTab === 'posts' && (
-                    <div className={styles['posts-grid']}>
-                        {userPosts.length > 0 ? (
-                            userPosts.map((post) => (
-                                <PostCard 
-                                    key={post.id}
-                                    post={post}
-                                    isFeatured={false} 
-                                    onHoverStart={() => {}} 
-                                    onHoverEnd={() => {}} 
-                                />
-                            ))
-                        ) : (
-                            <div className={styles['no-posts-found']}>
-                                <p>No posts found for this user yet.</p>
-                            </div>
-                        )}
-                    </div>
+                    <PostsGrid posts={userPosts} />
                 )}
 
                 {activeTab === 'about' && (

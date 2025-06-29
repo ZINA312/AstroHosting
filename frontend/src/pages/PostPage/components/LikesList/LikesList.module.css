@@ -1,0 +1,61 @@
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.likes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.like-item {
+  background: rgba(10, 10, 25, 0.5);
+  border-radius: 12px;
+  padding: 15px;
+  transition: all 0.3s ease;
+}
+.like-item:hover {
+  background: rgba(106, 17, 203, 0.5);
+  transform: translateY(-3px);
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 12px;
+  border: 2px solid rgba(106, 17, 203, 0.5);
+}
+
+.username {
+  color: #e0e0ff;
+}/*# sourceMappingURL=LikesList.module.css.map */

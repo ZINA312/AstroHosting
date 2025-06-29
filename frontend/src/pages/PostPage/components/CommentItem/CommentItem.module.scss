@@ -1,0 +1,137 @@
+@import '../../../../assets/variables';
+@import '../../../../assets/mixins';
+
+.comment-card {
+  background: $comment-card-bg;
+  border-radius: 12px;
+  padding: 20px;
+  border: $comment-card-border;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap; 
+  gap: 10px;      
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: $border-radius-round;
+  object-fit: cover;
+  margin-right: 12px;
+  border: $author-avatar-border;
+}
+
+.comment-username {
+  font-weight: 600;
+  color: $text-color-heading;
+}
+
+.comment-date {
+  font-size: 0.85rem;
+  color: $text-color-muted;
+}
+
+.comment-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: $text-color-description;
+  word-wrap: break-word; 
+}
+
+.comment-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.delete-comment-button,
+.edit-comment-button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  padding: 5px 8px;
+  border-radius: 5px;
+}
+
+.delete-comment-button {
+  color: $text-color-muted;
+  &:hover { color: $error-color; }
+}
+
+.edit-comment-button {
+  color: $text-color-muted;
+  &:hover { color: $tab-active-color; }
+}
+
+.editing-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.comment-input-edit {
+  width: 95%;
+  padding: 12px;
+  border-radius: $border-radius-md;
+  border: $comment-input-border;
+  background: darken($comment-input-bg, 5%);
+  color: $text-color-light;
+  font-size: 1rem;
+  transition: $transition-ease;
+  resize: vertical;
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.3);
+  }
+}
+
+.editing-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.save-comment-button,
+.cancel-edit-button {
+  padding: 8px 15px;
+  border-radius: $border-radius-sm;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition-ease;
+  border: none;
+}
+
+.save-comment-button {
+  background: linear-gradient(45deg, $gradient-start, $gradient-end);
+  color: $white-color;
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba($gradient-start, 0.3);
+  }
+}
+
+.cancel-edit-button {
+  background-color: $secondary-button-bg;
+  color: $text-color-heading;
+  &:hover {
+    transform: translateY(-1px);
+    background-color: darken($secondary-button-bg, 10%);
+  }
+}

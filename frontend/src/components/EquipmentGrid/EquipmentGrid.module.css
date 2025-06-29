@@ -1,0 +1,38 @@
+.equipment-list {
+  display: grid;
+  grid-template-columns: 30%;
+  gap: 20px;
+}
+
+.equipment-item {
+  background-color: rgba(18, 18, 35, 0.95);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(106, 17, 203, 0.5);
+  transition: all 0.2s, box-shadow all 0.2s;
+}
+.equipment-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.equipment-name {
+  font-size: 1.5rem;
+  color: #6a11cb;
+  margin-top: auto;
+}
+
+.equipment-type, .equipment-manufacturer {
+  background: rgba(106, 17, 203, 0.2);
+  margin-right: 10px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.equipment-item .equipment-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}/*# sourceMappingURL=EquipmentGrid.module.css.map */

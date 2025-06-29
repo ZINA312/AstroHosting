@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from './RecentPostsPage.module.scss';
 import { postApi } from '../../api/postApi'; 
-import PostCard from '../HomePage/components/PostCard/PostCard'; 
+import PostsGrid from '../../components/PostGrid/PostGrid'; 
 
 const RecentPostsPage = () => {
   const [recentPosts, setRecentPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [hoveredPost, setHoveredPost] = useState(null); 
 
   useEffect(() => {
     const fetchRecentPhotos = async () => {
@@ -57,18 +56,7 @@ const RecentPostsPage = () => {
           <button onClick={() => window.location.reload()} className={styles['retry-button']}>Retry</button>
         </div>
       ) : recentPosts.length > 0 ? (
-        <div className={styles['photos-grid']}>
-          {recentPosts.map(post => (
-            <PostCard
-              key={post.id}
-              post={post}
-              isFeatured={false} 
-              isHovered={hoveredPost === post.id}
-              onHoverStart={() => setHoveredPost(post.id)}
-              onHoverEnd={() => setHoveredPost(null)}
-            />
-          ))}
-        </div>
+        <PostsGrid posts={recentPosts} />
       ) : (
         <div className={styles['no-posts-found']}>
           <p>No recent photos found. Be the first to share one!</p>

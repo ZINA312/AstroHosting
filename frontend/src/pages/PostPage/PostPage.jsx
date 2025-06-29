@@ -1,27 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import styles from './PostPage.module.scss'; 
-import { postApi } from '../../api/postApi'; 
-import { likeApi } from '../../api/likeApi'; 
-import { commentApi } from '../../api/commentApi'; 
-import { IMAGE_BASE_URL } from '../../config/apiConfig'; 
-import { useAuth } from '../../context/AuthContext'; 
-
-
-const equipmentTypeMap = {
-  0: 'Camera',
-  1: 'Lens',
-  2: 'Coma Corrector',
-  3: 'Flattener', 
-  4: 'Mount',
-  5: 'Tripod',
-  6: 'Focuser',
-  7: 'Guide Scope',
-  8: 'Guide Camera',
-  9: 'Filter',
-  10: 'Accessory',
-};
+import styles from './PostPage.module.scss';
+import { postApi } from '../../api/postApi';
+import { likeApi } from '../../api/likeApi';
+import { commentApi } from '../../api/commentApi';
+import { IMAGE_BASE_URL } from '../../config/apiConfig';
+import { useAuth } from '../../context/AuthContext';
+import EquipmentList from '../../components/EquipmentGrid/EquipmentGrid';
+import PostHeader from './components/PostHeader/PostHeader';
+import PostTabs from './components/PostTabs/PostTabs';
+import LikesList from './components/LikesList/LikesList';
+import CommentsSection from './components/CommentsSection/CommentsSection';
 
 const PostPage = () => {
   const { postId } = useParams();
@@ -98,11 +88,9 @@ const PostPage = () => {
         };
         const createdComment = await commentApi.createComment(commentData);
         
-        
-        
         const commentWithUserInfo = {
             ...createdComment,
-            user: {
+            user: { 
                 id: currentUserId,
                 username: user?.username || "Anonymous",
                 avatarUrl: user?.avatarUrl || "/default-avatar.jpg"
@@ -133,7 +121,6 @@ const PostPage = () => {
           return;
       }
 
-      
       if (!window.confirm("Are you sure you want to delete this comment?")) { 
           return;
       }
@@ -214,6 +201,7 @@ const PostPage = () => {
         setPostDetails(prev => ({
           ...prev,
           likesCount: prev.likesCount + 1,
+          
           likedBy: [...(prev.likedBy || []), { id: currentUserId, username: user?.username || "Anonymous", avatarUrl: user?.avatarUrl || "/default-avatar.jpg" }] 
         }));
         setIsLiked(true);
@@ -267,8 +255,9 @@ const PostPage = () => {
 
   const equipmentUsed = postDetails.equipmentUsed || [];
   const likedBy = postDetails.likedBy || [];
+  
 
-  return (
+return (
     <motion.div
       className={styles['post-details-page']}
       initial={{ opacity: 0 }}
@@ -278,240 +267,68 @@ const PostPage = () => {
       <div className={styles['post-container']}>
         <div className={styles['post-image-container']}>
           <motion.img
-            src={postDetails.imageUrl ? `${IMAGE_BASE_URL}${postDetails.imageUrl}` : '/default-post-image.jpg'} 
+            src={postDetails.imageUrl ? `${IMAGE_BASE_URL}${postDetails.imageUrl}` : '/default-post-image.jpg'}
             alt={postDetails.title}
             className={styles['post-image']}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7 }}
-            onError={(e) => { e.target.onerror = null; e.target.src = '/default-post-image.jpg'; }} 
+            onError={(e) => { e.target.onerror = null; e.target.src = '/default-post-image.jpg'; }}
           />
         </div>
 
         <div className={styles['post-info']}>
-          <div className={styles['post-header']}>
-            <Link to={`/user/${postDetails.author.id}`} className={styles['author-info']}>
-              <img
-                src={postDetails.author.avatarUrl ? `${IMAGE_BASE_URL}${postDetails.author.avatarUrl}` : '/default-avatar.jpg'} 
-                alt={postDetails.author.username}
-                className={styles['author-avatar']}
-                onError={handleAvatarError}
-              />
-              <div>
-                <span className={styles['author-name']}>{postDetails.author.username}</span>
-                <span className={styles['post-date']}>{formatDate(postDetails.dateCreated)}</span>
-              </div>
-            </Link>
-
-            <div className={styles['post-stats']}>
-              <div 
-                className={`${styles['stat-item']} ${styles.clickableLike} ${isLiked ? styles.liked : ''}`} 
-                onClick={handleLikeToggle}
-                title={isLiked ? "Unlike" : "Like"}
-              >
-                <span className={styles['stat-icon']}>❤️</span>
-                <span className={styles['stat-value']}>{postDetails.likesCount}</span>
-              </div>
-              <div className={styles['stat-item']}>
-                <span className={styles['stat-icon']}>💬</span>
-                <span className={styles['stat-value']}>{comments.length}</span>
-              </div>
-            </div>
-          </div>
+          <PostHeader
+            postDetails={postDetails}
+            commentsCount={comments.length}
+            isLiked={isLiked}
+            onLikeToggle={handleLikeToggle}
+            formatDate={formatDate}
+            handleAvatarError={handleAvatarError}
+            styles={styles}
+          />
 
           <div className={styles['post-content']}>
             <h1 className={styles['post-title']}>{postDetails.title}</h1>
             <p className={styles['post-description']}>{postDetails.description}</p>
           </div>
 
-          <div className={styles['post-tabs']}>
-            <button
-              className={`${styles['tab-item']} ${activeTab === 'equipment' ? styles.active : ''}`}
-              onClick={() => setActiveTab('equipment')}
-            >
-              Equipment Used
-            </button>
-            <button
-              className={`${styles['tab-item']} ${activeTab === 'likes' ? styles.active : ''}`}
-              onClick={() => setActiveTab('likes')}
-            >
-              Liked By ({likedBy.length})
-            </button>
-            <button
-              className={`${styles['tab-item']} ${activeTab === 'comments' ? styles.active : ''}`}
-              onClick={() => setActiveTab('comments')}
-            >
-              Comments ({comments.length}) 
-            </button>
-          </div>
+          <PostTabs
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            likesCount={likedBy.length}
+            commentsCount={comments.length}
+            styles={styles}
+          />
 
           <div className={styles['tab-content']}>
-            {activeTab === 'equipment' && (
-              <div className={styles['equipment-section']}>
-                {equipmentUsed.length > 0 ? (
-                  equipmentUsed.map((equipment, index) => (
-                    
-                    <motion.div
-                      key={equipment.id}
-                      className={styles['equipment-card']}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <Link to={`/equipment/${equipment.id}`} className={styles['equipment-card-link']}>
-                        <h3 className={styles['equipment-name']}>{equipment.name}</h3>
-                        <div className={styles['equipment-meta']}>
-                          <span className={styles['equipment-type']}>{equipmentTypeMap[equipment.type] || 'Unknown Type'}</span>
-                          <span className={styles['equipment-manufacturer']}>{equipment.manufacturer}</span>
-                        </div>
-
-                        <div className={styles.specifications}>
-                          <h4>Specifications:</h4>
-                          <ul>
-                            {Object.entries(equipment.specifications || {}).map(([key, value]) => (
-                              <li key={key}>
-                                <span className={styles['spec-key']}>{key}:</span>
-                                <span className={styles['spec-value']}>{value}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ))
-                ) : (
-                  <p>No equipment details available for this post.</p>
-                )}
-              </div>
-            )}
-
+            {activeTab === 'equipment' && <EquipmentList equipment={equipmentUsed} />}
             {activeTab === 'likes' && (
-              <div className={styles['likes-section']}>
-                {likedBy.length > 0 ? (
-                  <div className={styles['likes-grid']}>
-                    {likedBy.map((user, index) => (
-                      <motion.div
-                        key={user.id}
-                        className={styles['like-item']}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                      >
-                        <Link to={`/user/${user.id}`} className={styles['user-link']}>
-                          <img
-                            src={user.avatarUrl ? `${IMAGE_BASE_URL}${user.avatarUrl}` : '/default-avatar.jpg'} 
-                            alt={user.username}
-                            className={styles['user-avatar']}
-                            onError={handleAvatarError}
-                          />
-                          <span className={styles.username}>{user.username}</span>
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </div>
-                ) : (
-                  <p>No likes yet. Be the first to like this post!</p>
-                )}
-              </div>
+              <LikesList 
+                likedBy={likedBy} 
+                handleAvatarError={handleAvatarError} 
+                styles={styles} 
+              />
             )}
-
             {activeTab === 'comments' && (
-              <div className={styles['comments-section']}>
-                {isAuthenticated && ( 
-                  <form onSubmit={handleCommentSubmit} className={styles['comment-form']}>
-                    <div className={styles['form-group']}>
-                      <textarea
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                        placeholder="Add a comment..."
-                        rows="3"
-                        className={styles['comment-input']}
-                      ></textarea>
-                    </div>
-                    <button type="submit" className={styles['submit-button']}>Post Comment</button>
-                  </form>
-                )}
-                {!isAuthenticated && (
-                  <p className={styles['login-to-comment']}>
-                    <Link to="/login">Log in</Link> to post comments.
-                  </p>
-                )}
-
-                {comments.length > 0 ? ( 
-                  <div className={styles['comments-list']}>
-                    {comments.map((comment) => (
-                      <motion.div
-                        key={comment.id}
-                        className={styles['comment-card']}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div className={styles['comment-header']}>
-                          <Link to={`/user/${comment.user.id}`} className={styles['comment-author']}>
-                            <img
-                              src={comment.user.avatarUrl ? `${IMAGE_BASE_URL}${comment.user.avatarUrl}` : '/default-avatar.jpg'} 
-                              alt={comment.user.username}
-                              className={styles['comment-avatar']}
-                              onError={handleAvatarError}
-                            />
-                            <span className={styles['comment-username']}>{comment.user.username}</span>
-                          </Link>
-                          <span className={styles['comment-date']} title={formatDate(comment.commentDate)}>
-                            {formatDate(comment.commentDate)}
-                          </span>
-                            {isAuthenticated && currentUserId === comment.user.id && (
-                                <div className={styles['comment-actions']}>
-                                    <button 
-                                        className={styles['edit-comment-button']} 
-                                        onClick={() => handleEditComment(comment)}
-                                        title="Edit comment"
-                                    >
-                                        Edit
-                                    </button>
-                                    <button 
-                                        className={styles['delete-comment-button']} 
-                                        onClick={() => handleDeleteComment(comment.id)}
-                                        title="Delete comment"
-                                    >
-                                        &times;
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                        {editingCommentId === comment.id ? (
-                            <div className={styles['editing-controls']}>
-                                <textarea
-                                    value={editedCommentText}
-                                    onChange={(e) => setEditedCommentText(e.target.value)}
-                                    rows="3"
-                                    className={styles['comment-input-edit']} 
-                                ></textarea>
-                                <div className={styles['editing-buttons']}>
-                                    <button 
-                                        className={styles['save-comment-button']} 
-                                        onClick={() => handleSaveEditedComment(comment.id)}
-                                    >
-                                        Save
-                                    </button>
-                                    <button 
-                                        className={styles['cancel-edit-button']} 
-                                        onClick={handleCancelEdit}
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        ) : (
-                            <p className={styles['comment-text']}>{comment.content}</p>
-                        )}
-                      </motion.div>
-                    ))}
-                  </div>
-                ) : (
-                  <p>No comments yet. Be the first to comment!</p>
-                )}
-              </div>
+              <CommentsSection
+                comments={comments}
+                isAuthenticated={isAuthenticated}
+                currentUserId={currentUserId}
+                newComment={newComment}
+                setNewComment={setNewComment}
+                handleCommentSubmit={handleCommentSubmit}
+                editingCommentId={editingCommentId}
+                editedCommentText={editedCommentText}
+                setEditedCommentText={setEditedCommentText}
+                handleEditComment={handleEditComment}
+                handleDeleteComment={handleDeleteComment}
+                handleSaveEditedComment={handleSaveEditedComment}
+                handleCancelEdit={handleCancelEdit}
+                formatDate={formatDate}
+                handleAvatarError={handleAvatarError}
+                styles={styles}
+              />
             )}
           </div>
         </div>

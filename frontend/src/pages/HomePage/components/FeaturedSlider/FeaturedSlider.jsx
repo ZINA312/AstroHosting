@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Slider from 'react-slick';
-import PostCard from '../PostCard/PostCard'; 
+import PostCard from '../../../../components/PostCard/PostCard'; 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './FeaturedSlider.module.scss'; 

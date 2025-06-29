@@ -1,0 +1,49 @@
+@import '../../../../assets/variables';
+@import '../../../../assets/mixins';
+
+.comment-form {
+  margin-bottom: 30px;
+  background: $comment-form-bg;
+  border-radius: 12px;
+  padding: 20px;
+  border: $comment-form-border;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.comment-input {
+  width: 95%;
+  padding: 15px;
+  border-radius: $border-radius-md;
+  border: $comment-input-border;
+  background: $comment-input-bg;
+  color: $text-color-light;
+  font-size: 1rem;
+  transition: $transition-ease;
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.3);
+  }
+}
+
+.submit-button {
+  background: linear-gradient(45deg, $gradient-start, $gradient-end);
+  color: $white-color;
+  border: none;
+  padding: 12px 25px;
+  border-radius: $border-radius-sm;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition-ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba($gradient-start, 0.4);
+  }
+}

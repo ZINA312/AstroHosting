@@ -1,8 +1,6 @@
-@import '../../../../assets/variables';
-
 .photos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: $spacing-lg;
-  padding: 0 $spacing-md; 
-}
+  gap: 25px;
+  padding: 0 20px;
+}/*# sourceMappingURL=PostGrid.module.css.map */

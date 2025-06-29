@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import PostCard from '../PostCard/PostCard'; 
-import styles from './PopularGrid.module.scss';
+import styles from './PostGrid.module.scss';
 
-const PopularGrid = ({ posts }) => {
+const PostGrid = ({ posts }) => {
   const [hoveredPost, setHoveredPost] = useState(null);
 
   return (
@@ -20,4 +20,4 @@ const PopularGrid = ({ posts }) => {
   );
 };
 
-export default PopularGrid;
+export default PostGrid;

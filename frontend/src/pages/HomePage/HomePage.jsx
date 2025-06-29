@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import FeaturedSlider from './components/FeaturedSlider/FeaturedSlider';
-import PopularGrid from './components/PopularGrid/PopularGrid';
+import PostGrid from '../../components/PostGrid/PostGrid';
 import styles from './HomePage.module.scss';
 import { postApi } from '../../api/postApi'; 
 
@@ -67,7 +67,7 @@ const HomePage = () => {
       <section className={styles['popular-section']}>
         <h2 className={styles['section-title']}>Popular Photos</h2>
         {popularPosts.length > 0 ? (
-          <PopularGrid posts={popularPosts} />
+          <PostGrid posts={popularPosts} />
         ) : (
           <p>No popular posts available.</p>
         )}
